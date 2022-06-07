@@ -12,21 +12,20 @@ export class UserService {
 
   listOfUsers: AboutUser[] = [];
   isSigned = false;
+  currentUser: AboutUser;
 
   constructor(private localStorageService: LocalStorageService) {
     this.listOfUsers = this.localStorageService.get('users');
   }
 
   addUser(user: User): boolean {
-    if(this.isUser(user)) {
-      return false;
-    }
     let newUser: AboutUser = {
       id: this.listOfUsers.length,
       user: user,
       listOfTasks: [],
       listOfCategories: []
     }
+    this.currentUser = newUser;
     this.listOfUsers.push(newUser);
     this.localStorageService.set('users', this.listOfUsers);
     this.isSigned = true;
@@ -35,8 +34,10 @@ export class UserService {
 
   isUser(user: User): boolean {
     for(let i = 0; i < this.listOfUsers.length; i++) {
-      if(user.login === this.listOfUsers[i].user.login && user.password === this.listOfUsers[i].user.password)
+      if(user.login === this.listOfUsers[i].user.login) {
+        this.currentUser = this.listOfUsers[i];
         return true;
+      }
     }
     return false;
   }

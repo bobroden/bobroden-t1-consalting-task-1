@@ -1,8 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
 
 import { UserService } from '../services/user.service';
+import { TaskService } from '../services/task.service';
+import { CategoryService } from '../services/category.service';
+
+import { ErrorComponent } from '../error/error.component';
 
 import { User } from '../interfaces/user';
 
@@ -30,7 +35,7 @@ export class AuthorizationComponent implements OnInit, OnDestroy {
   emailStatusSub: Subscription;
   passwodStatusSub: Subscription;
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private taskService: TaskService, private categoryService: CategoryService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.emailValueSub = this.emailFormControl.valueChanges.subscribe(value => this.emailInputValue = value ? value : '');
@@ -61,6 +66,10 @@ export class AuthorizationComponent implements OnInit, OnDestroy {
 
   }
 
+  openDialog() {
+    this.dialog.open(ErrorComponent);
+  }
+
   signIn(): void {
     let user: User = {
       login: this.emailInputValue,
@@ -68,6 +77,8 @@ export class AuthorizationComponent implements OnInit, OnDestroy {
     }
     if(this.userService.isUser(user)) {
       this.userService.isSigned = true;
+      this.taskService.listOfTasks = this.userService.currentUser.listOfTasks;
+      this.categoryService.listOfCategories = this.userService.currentUser.listOfCategories;
     }
   }
 
@@ -76,7 +87,14 @@ export class AuthorizationComponent implements OnInit, OnDestroy {
       login: this.emailInputValue,
       password: this.passwordInputValue
     }
-    this.userService.addUser(user);
+    if(!this.userService.isUser(user)) {
+      this.userService.addUser(user);
+      this.categoryService.listOfCategories = [];
+      this.taskService.listOfTasks = [];
+    }
+    else {
+      this.openDialog();
+    }
   }
 
 }
