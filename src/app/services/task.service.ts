@@ -6,7 +6,7 @@ import { Task } from '../interfaces/task';
 })
 export class TaskService {
 
-  listOfTasks: Task[];
+  listOfTasks: Task[] = [];
 
-  constructor() { }
+  constructor() {}
 }

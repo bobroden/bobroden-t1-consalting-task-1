@@ -1,0 +1,20 @@
+.list-of-tasks {
+
+    &__input-container {
+        font-size: 14px;
+        width: 100%;
+    }
+
+    &__table {
+        width: 100%;
+    }
+
+    &__delete-button, &__edit-button {
+        cursor: pointer;
+    }
+
+    &__delete-button {
+        margin-right: 10px;
+    }
+
+}

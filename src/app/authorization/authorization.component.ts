@@ -9,7 +9,6 @@ import { CategoryService } from '../services/category.service';
 
 import { ErrorComponent } from '../error/error.component';
 
-import { User } from '../interfaces/user';
 import { MainUserInfo } from '../interfaces/mainUserInfo';
 
 @Component({
@@ -61,10 +60,6 @@ export class AuthorizationComponent implements OnInit, OnDestroy {
     this.passwordValueSub.unsubscribe();
     this.emailStatusSub.unsubscribe();
     this.passwodStatusSub.unsubscribe();
-  }
-
-  changeMode(): void {
-
   }
 
   openDialog() {

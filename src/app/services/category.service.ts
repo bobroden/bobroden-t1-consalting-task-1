@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class CategoryService {
 
-  listOfCategories: string[];
+  listOfCategories: string[] = [];
 
   constructor() { }
 }

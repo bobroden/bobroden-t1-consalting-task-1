@@ -1,1 +1,57 @@
-<h1>List of your tasks</h1>
+<div class="list-of-tasks">
+    <mat-form-field appearance="standard" class="list-of-tasks__input-container">
+        <mat-label class="list-of-tasks__input-label">Filter</mat-label>
+        <input class="list-of-tasks__input" matInput (keyup)="applyFilter($event)" placeholder="filter" #input>
+    </mat-form-field>
+
+    <div>
+        <table class="list-of-tasks__table mat-elevation-z8" mat-table [dataSource]="dataSource" matSort>
+
+            <ng-container matColumnDef="id">
+                <th class="list-of-tasks__title" mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+                <td class="list-of-tasks__value" mat-cell *matCellDef="let task"> {{task.id}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="name">
+                <th class="list-of-tasks__title" mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+                <td class="list-of-tasks__value" mat-cell *matCellDef="let task"> {{task.name}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="startDate">
+                <th class="list-of-tasks__title" mat-header-cell *matHeaderCellDef mat-sort-header> Start date </th>
+                <td class="list-of-tasks__value" mat-cell *matCellDef="let task"> {{task.startDate | date:'dd.MM.yy'}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="endDate">
+                <th class="list-of-tasks__title" mat-header-cell *matHeaderCellDef mat-sort-header> End date </th>
+                <td class="list-of-tasks__value" mat-cell *matCellDef="let task"> {{task.endDate | date:'dd.MM.yy'}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="priority">
+                <th class="list-of-tasks__title" mat-header-cell *matHeaderCellDef mat-sort-header> Priority </th>
+                <td class="list-of-tasks__value" mat-cell *matCellDef="let task"> {{task.priority}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="category">
+                <th class="list-of-tasks__title" mat-header-cell *matHeaderCellDef mat-sort-header> Category </th>
+                <td class="list-of-tasks__value" mat-cell *matCellDef="let task"> {{task.category}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+                <th class="list-of-tasks__title" mat-header-cell *matHeaderCellDef> Actions </th>
+                <td class="list-of-tasks__value list-of-tasks__value_actions" mat-cell *matCellDef="let task">
+                    <mat-icon class="list-of-tasks__delete-button">close</mat-icon>
+                    <mat-icon class="list-of-tasks__edit-button">edit</mat-icon>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColums"></tr>
+            <tr mat-row *matRowDef="let task; columns: displayedColums;"></tr>
+
+            <tr class="mat-row" *matNoDataRow>
+                <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+            </tr>
+            
+        </table>
+    </div>
+</div>
