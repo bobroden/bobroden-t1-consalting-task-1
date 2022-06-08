@@ -10,6 +10,7 @@ import { CategoryService } from '../services/category.service';
 import { ErrorComponent } from '../error/error.component';
 
 import { User } from '../interfaces/user';
+import { MainUserInfo } from '../interfaces/mainUserInfo';
 
 @Component({
   selector: 'app-authorization',
@@ -71,7 +72,7 @@ export class AuthorizationComponent implements OnInit, OnDestroy {
   }
 
   signIn(): void {
-    let user: User = {
+    let user: MainUserInfo = {
       login: this.emailInputValue,
       password: this.passwordInputValue
     }
@@ -83,11 +84,11 @@ export class AuthorizationComponent implements OnInit, OnDestroy {
   }
 
   signUp(): void {
-    let user: User = {
+    let user: MainUserInfo = {
       login: this.emailInputValue,
       password: this.passwordInputValue
     }
-    if(!this.userService.isUser(user)) {
+    if(!this.userService.checkSameLogin(user)) {
       this.userService.addUser(user);
       this.categoryService.listOfCategories = [];
       this.taskService.listOfTasks = [];
