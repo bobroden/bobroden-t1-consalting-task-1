@@ -4,6 +4,7 @@ import { MaterialModule } from './material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { ListOfTasksComponent } from '../list-of-tasks/list-of-tasks.component';
+import { CreatingTaskComponent } from '../creating-task/creating-task.component';
 
 @NgModule({
   imports: [
@@ -12,7 +13,13 @@ import { ListOfTasksComponent } from '../list-of-tasks/list-of-tasks.component';
     FormsModule,
     ReactiveFormsModule
   ],
-  declarations: [ListOfTasksComponent],
-  exports: [ListOfTasksComponent]
+  declarations: [
+    ListOfTasksComponent,
+    CreatingTaskComponent
+  ],
+  exports: [
+    ListOfTasksComponent,
+    CreatingTaskComponent
+  ]
 })
 export class TasksModule { }

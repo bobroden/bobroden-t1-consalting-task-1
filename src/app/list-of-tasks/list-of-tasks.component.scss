@@ -1,4 +1,14 @@
 .list-of-tasks {
+    width: 80%;
+    margin: 0 auto;
+
+    &__button-container {
+        padding: 16px 0;
+    }
+
+    &__add-button {
+        margin-left: 8px;
+    }
 
     &__input-container {
         font-size: 14px;

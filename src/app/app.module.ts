@@ -10,14 +10,12 @@ import { TasksModule } from './modules/tasks.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { ErrorComponent } from './error/error.component';
-import { CreatingTaskComponent } from './creating-task/creating-task.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    ErrorComponent,
-    CreatingTaskComponent
+    ErrorComponent
   ],
   imports: [
     BrowserModule,

@@ -19,7 +19,7 @@ import { MainUserInfo } from '../interfaces/mainUserInfo';
 export class AuthorizationComponent implements OnInit, OnDestroy {
 
   emailFormControl = new FormControl('', [Validators.required, Validators.email]);
-  passwordFormControl = new FormControl('', [Validators.required, Validators.minLength(5), Validators.pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])/)])
+  passwordFormControl = new FormControl('', [Validators.required, Validators.minLength(5), Validators.pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])/)]);
 
   isRegistration = false;
   hide = true;
