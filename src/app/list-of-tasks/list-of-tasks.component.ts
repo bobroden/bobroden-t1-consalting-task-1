@@ -15,7 +15,7 @@ import { Task } from '../interfaces/task';
   templateUrl: './list-of-tasks.component.html',
   styleUrls: ['./list-of-tasks.component.scss']
 })
-export class ListOfTasksComponent implements OnInit, AfterViewInit {
+export class ListOfTasksComponent implements AfterViewInit {
 
   displayedColums: string[] = ['id', 'name', 'startDate', 'endDate', 'priority', 'category', 'actions']
   dataSource: MatTableDataSource<Task>;
@@ -25,10 +25,6 @@ export class ListOfTasksComponent implements OnInit, AfterViewInit {
   
   constructor(public taskService: TaskService, public dialog: MatDialog) {
     this.dataSource = new MatTableDataSource(this.taskService.listOfTasks);
-  }
-
-  ngOnInit(): void {
-    this.dataSource.sort = this.sort;
   }
 
   ngAfterViewInit(): void {
@@ -71,7 +67,8 @@ export class ListOfTasksComponent implements OnInit, AfterViewInit {
         newTask.category = result.category
       }
       this.taskService.add(newTask);
-      this.table.renderRows();
+      this.dataSource = new MatTableDataSource(this.taskService.listOfTasks);
+      this.dataSource.sort = this.sort;
     })
   }
 
