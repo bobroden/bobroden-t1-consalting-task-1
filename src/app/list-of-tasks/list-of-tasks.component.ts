@@ -4,10 +4,11 @@ import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 
-import { TaskService } from '../services/task.service';
-
 import { CreatingTaskComponent } from '../creating-task/creating-task.component';
 import { ChangingTaskComponent } from '../changing-task/changing-task.component';
+import { DeletingTaskComponent } from '../deleting-task/deleting-task.component';
+
+import { TaskService } from '../services/task.service';
 
 import { Task } from '../interfaces/task';
 
@@ -27,6 +28,7 @@ export class ListOfTasksComponent implements AfterViewInit, OnDestroy {
 
   dialogCreateSub: Subscription;
   dialogChangeSub: Subscription;
+  dialogDeleteSub: Subscription;
   
   constructor(public taskService: TaskService, public dialog: MatDialog) {
     this.dataSource = new MatTableDataSource(this.taskService.listOfTasks);
@@ -113,6 +115,23 @@ export class ListOfTasksComponent implements AfterViewInit, OnDestroy {
         changingTask.category = result.category
       }
       this.taskService.changeTask(changingTask);
+      this.dataSource = new MatTableDataSource(this.taskService.listOfTasks);
+      this.dataSource.sort = this.sort;
+    })
+  }
+
+  openDeletingDialog(task: Task) {
+    const dialogRef = this.dialog.open(DeletingTaskComponent, {
+      width: '30%',
+      data: {
+        id: +task.id,
+        name: task.name,
+      }
+    });
+
+    this.dialogDeleteSub = dialogRef.afterClosed().subscribe(result => {
+      let deletingId = +result.id;
+      this.taskService.delete(deletingId);
       this.dataSource = new MatTableDataSource(this.taskService.listOfTasks);
       this.dataSource.sort = this.sort;
     })

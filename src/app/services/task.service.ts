@@ -15,13 +15,15 @@ export class TaskService {
     return task;
   }
 
-  delete(task: Task): Task | 'error' {
-    const index = this.listOfTasks.indexOf(task);
-    if(index > -1) {
-      this.listOfTasks.splice(index, 1);
-      return task;
+  delete(id: number): Task | null {
+    let oldTask = null;
+    for(let i = 0; i < this.listOfTasks.length; i++) {
+      if(this.listOfTasks[i].id === id) {
+        oldTask = this.listOfTasks[i];
+        this.listOfTasks.splice(i, 1);
+      }
     }
-    return 'error';
+    return oldTask;
   }
 
   changeTask(task: Task): Task | null {

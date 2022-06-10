@@ -1,0 +1,8 @@
+<div class="deleting-task">
+    <h1 mat-dialog-title class="deleting-task__title">Delete the task</h1>
+    <div mat-dialog-content class="deleting-task__content">Are you sure you want to delete a task called: {{data.name}}</div>
+    <div mat-dialog-actions class="deleting-task__button-container">
+        <button mat-button (click)="cancel()" class="deleting-task__cancel-button">Cancel</button>
+        <button mat-button [mat-dialog-close]="data" cdkFocusInitial class="deleting-task__add-button">Delete</button>
+    </div>
+</div>

@@ -21,7 +21,7 @@ export class ChangingTaskComponent implements OnInit {
     public taskService: TaskService,
     private fb: FormBuilder) {}
 
-  newTaskForm = this.fb.group({
+  changingTaskForm = this.fb.group({
     idFormControl: [{value: this.data.id, disabled: true}, Validators.required],
     nameFormControl: [this.data.name, Validators.compose([Validators.required, Validators.minLength(3)])],
     startDateFormControl: [this.data.startDate],
@@ -42,12 +42,12 @@ export class ChangingTaskComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.idSub = this.newTaskForm.controls['idFormControl'].valueChanges.subscribe(value => this.data.id = value);
-    this.nameSub = this.newTaskForm.controls['nameFormControl'].valueChanges.subscribe(value => this.data.name = value);
-    this.startDateSub = this.newTaskForm.controls['startDateFormControl'].valueChanges.subscribe(value => this.data.startDate = value);
-    this.endDateSub = this.newTaskForm.controls['endDateFormControl'].valueChanges.subscribe(value => this.data.endDate = value);
-    this.prioritySub = this.newTaskForm.controls['priorityFormControl'].valueChanges.subscribe(value => this.data.priority = value);
-    this.categorySub = this.newTaskForm.controls['categoryFormControl'].valueChanges.subscribe(value => this.data.category = value);
+    this.idSub = this.changingTaskForm.controls['idFormControl'].valueChanges.subscribe(value => this.data.id = value);
+    this.nameSub = this.changingTaskForm.controls['nameFormControl'].valueChanges.subscribe(value => this.data.name = value);
+    this.startDateSub = this.changingTaskForm.controls['startDateFormControl'].valueChanges.subscribe(value => this.data.startDate = value);
+    this.endDateSub = this.changingTaskForm.controls['endDateFormControl'].valueChanges.subscribe(value => this.data.endDate = value);
+    this.prioritySub = this.changingTaskForm.controls['priorityFormControl'].valueChanges.subscribe(value => this.data.priority = value);
+    this.categorySub = this.changingTaskForm.controls['categoryFormControl'].valueChanges.subscribe(value => this.data.category = value);
   }
 
   ngOnDestroy(): void {

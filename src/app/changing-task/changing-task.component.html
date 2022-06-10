@@ -1,7 +1,7 @@
 <div class="changing-task">
-    <h1 mat-dialog-title class="changing-task__title">Add task</h1>
+    <h1 mat-dialog-title class="changing-task__title">Change task</h1>
     <div mat-dialog-content class="creatchanging__content">
-        <form [formGroup]="newTaskForm">
+        <form [formGroup]="changingTaskForm">
             <mat-form-field appearance="fill"  class="changing-task__id-input">
                 <mat-label>ID</mat-label>
                 <input formControlName="idFormControl" matInput>
@@ -9,10 +9,10 @@
             <mat-form-field appearance="fill" class="changing-task__name-input">
                 <mat-label>Name</mat-label>
                 <input formControlName="nameFormControl" matInput>
-                <mat-error *ngIf="newTaskForm.controls['nameFormControl'].hasError('minlength') && !newTaskForm.controls['nameFormControl'].hasError('required')">
+                <mat-error *ngIf="changingTaskForm.controls['nameFormControl'].hasError('minlength') && !changingTaskForm.controls['nameFormControl'].hasError('required')">
                     Please enter a name at least 5 characters long
                 </mat-error>
-                <mat-error *ngIf="newTaskForm.controls['nameFormControl'].hasError('required')">
+                <mat-error *ngIf="changingTaskForm.controls['nameFormControl'].hasError('required')">
                     Name is <strong>required</strong>
                 </mat-error>
             </mat-form-field>
@@ -40,13 +40,13 @@
                     <mat-option value="three">three</mat-option>
                 </mat-select>
             </mat-form-field>
-            <mat-error *ngIf="newTaskForm.errors && !newTaskForm.controls['nameFormControl'].hasError('minlength') && !newTaskForm.controls['nameFormControl'].hasError('required')">
+            <mat-error *ngIf="changingTaskForm.errors && !changingTaskForm.controls['nameFormControl'].hasError('minlength') && !changingTaskForm.controls['nameFormControl'].hasError('required')">
                 Start date must be less than or equal to the end date
             </mat-error>
         </form>
     </div>
     <div mat-dialog-actions class="changing-task__button-container">
         <button mat-button (click)="cancel()" class="changing-task__cancel-button">Cancel</button>
-        <button mat-button [mat-dialog-close]="data" [disabled]="!newTaskForm.valid" cdkFocusInitial class="changing-task__add-button">Change</button>
+        <button mat-button [mat-dialog-close]="data" [disabled]="!changingTaskForm.valid" cdkFocusInitial class="changing-task__add-button">Change</button>
     </div>
 </div>

@@ -47,7 +47,7 @@
             <ng-container matColumnDef="actions">
                 <th class="list-of-tasks__title" mat-header-cell *matHeaderCellDef> Actions </th>
                 <td class="list-of-tasks__value list-of-tasks__value_actions" mat-cell *matCellDef="let task">
-                    <mat-icon class="list-of-tasks__delete-button">delete</mat-icon>
+                    <mat-icon class="list-of-tasks__delete-button" (click)="openDeletingDialog(task)">delete</mat-icon>
                     <mat-icon class="list-of-tasks__edit-button" (click)="openChangingDialog(task)">edit</mat-icon>
                 </td>
             </ng-container>
