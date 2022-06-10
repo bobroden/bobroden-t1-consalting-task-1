@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { ListOfTasksComponent } from '../list-of-tasks/list-of-tasks.component';
 import { CreatingTaskComponent } from '../creating-task/creating-task.component';
+import { ChangingTaskComponent } from '../changing-task/changing-task.component';
 
 @NgModule({
   imports: [
@@ -15,11 +16,13 @@ import { CreatingTaskComponent } from '../creating-task/creating-task.component'
   ],
   declarations: [
     ListOfTasksComponent,
-    CreatingTaskComponent
+    CreatingTaskComponent,
+    ChangingTaskComponent
   ],
   exports: [
     ListOfTasksComponent,
-    CreatingTaskComponent
+    CreatingTaskComponent,
+    ChangingTaskComponent
   ]
 })
 export class TasksModule { }

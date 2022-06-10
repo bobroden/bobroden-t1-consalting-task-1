@@ -1,0 +1,52 @@
+<div class="changing-task">
+    <h1 mat-dialog-title class="changing-task__title">Add task</h1>
+    <div mat-dialog-content class="creatchanging__content">
+        <form [formGroup]="newTaskForm">
+            <mat-form-field appearance="fill"  class="changing-task__id-input">
+                <mat-label>ID</mat-label>
+                <input formControlName="idFormControl" matInput>
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="changing-task__name-input">
+                <mat-label>Name</mat-label>
+                <input formControlName="nameFormControl" matInput>
+                <mat-error *ngIf="newTaskForm.controls['nameFormControl'].hasError('minlength') && !newTaskForm.controls['nameFormControl'].hasError('required')">
+                    Please enter a name at least 5 characters long
+                </mat-error>
+                <mat-error *ngIf="newTaskForm.controls['nameFormControl'].hasError('required')">
+                    Name is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="changing-task__start-date-input">
+                <mat-label>Start date</mat-label>
+                <input formControlName="startDateFormControl" matInput type="date">
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="changing-task__end-date-input">
+                <mat-label>End date</mat-label>
+                <input formControlName="endDateFormControl" matInput type="date">
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="changing-task__priority-select">
+                <mat-label>Select priority</mat-label>
+                <mat-select formControlName="priorityFormControl">
+                    <mat-option value="1">1</mat-option>
+                    <mat-option value="2">2</mat-option>
+                    <mat-option value="3">3</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="changing-task__category-select">
+                <mat-label>Select category</mat-label>
+                <mat-select formControlName="categoryFormControl">
+                    <mat-option value="one">one</mat-option>
+                    <mat-option value="two">two</mat-option>
+                    <mat-option value="three">three</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-error *ngIf="newTaskForm.errors && !newTaskForm.controls['nameFormControl'].hasError('minlength') && !newTaskForm.controls['nameFormControl'].hasError('required')">
+                Start date must be less than or equal to the end date
+            </mat-error>
+        </form>
+    </div>
+    <div mat-dialog-actions class="changing-task__button-container">
+        <button mat-button (click)="cancel()" class="changing-task__cancel-button">Cancel</button>
+        <button mat-button [mat-dialog-close]="data" [disabled]="!newTaskForm.valid" cdkFocusInitial class="changing-task__add-button">Change</button>
+    </div>
+</div>

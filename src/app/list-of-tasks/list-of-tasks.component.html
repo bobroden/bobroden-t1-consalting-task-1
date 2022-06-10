@@ -1,7 +1,7 @@
 <div class="list-of-tasks">
 
     <div class="list-of-tasks__button-container">
-        <button mat-raised-button (click)="openDialog()" color="primary" class="list-of-tasks__add-button">
+        <button mat-raised-button (click)="openCreatingDialog()" color="primary" class="list-of-tasks__add-button">
             Add task
         </button>
     </div>
@@ -48,7 +48,7 @@
                 <th class="list-of-tasks__title" mat-header-cell *matHeaderCellDef> Actions </th>
                 <td class="list-of-tasks__value list-of-tasks__value_actions" mat-cell *matCellDef="let task">
                     <mat-icon class="list-of-tasks__delete-button">delete</mat-icon>
-                    <mat-icon class="list-of-tasks__edit-button">edit</mat-icon>
+                    <mat-icon class="list-of-tasks__edit-button" (click)="openChangingDialog(task)">edit</mat-icon>
                 </td>
             </ng-container>
 

@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
 import { Task } from '../interfaces/task';
 
 @Injectable({
@@ -25,7 +24,14 @@ export class TaskService {
     return 'error';
   }
 
-  getTasks(): Observable<Task[]> {
-    return of(this.listOfTasks);
+  changeTask(task: Task): Task | null {
+    let oldTask = null;
+    for(let i = 0; i < this.listOfTasks.length; i++) {
+      if(this.listOfTasks[i].id === task.id) {
+        oldTask = this.listOfTasks[i];
+        this.listOfTasks[i] = task;
+      }
+    }
+    return oldTask;
   }
 }

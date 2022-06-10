@@ -9,25 +9,25 @@ import { TaskService } from '../services/task.service';
 import { Task } from '../interfaces/task';
 
 @Component({
-  selector: 'app-creating-task',
-  templateUrl: './creating-task.component.html',
-  styleUrls: ['./creating-task.component.scss']
+  selector: 'app-changing-task',
+  templateUrl: './changing-task.component.html',
+  styleUrls: ['./changing-task.component.scss']
 })
-export class CreatingTaskComponent implements OnInit, OnDestroy {  
+export class ChangingTaskComponent implements OnInit {
 
   constructor(
-    public dialogRef: MatDialogRef<CreatingTaskComponent>,
+    public dialogRef: MatDialogRef<ChangingTaskComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Task,
     public taskService: TaskService,
     private fb: FormBuilder) {}
 
   newTaskForm = this.fb.group({
-    idFormControl: [{value: this.taskService.listOfTasks.length, disabled: true}, Validators.required],
-    nameFormControl: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
-    startDateFormControl: [''],
-    endDateFormControl: [''],
-    priorityFormControl: [''],
-    categoryFormControl: ['']
+    idFormControl: [{value: this.data.id, disabled: true}, Validators.required],
+    nameFormControl: [this.data.name, Validators.compose([Validators.required, Validators.minLength(3)])],
+    startDateFormControl: [this.data.startDate],
+    endDateFormControl: [this.data.endDate],
+    priorityFormControl: [this.data.priority],
+    categoryFormControl: [this.data.category]
   }, {validator: this.datesValidator('startDateFormControl', 'endDateFormControl')})
 
   idSub: Subscription;
