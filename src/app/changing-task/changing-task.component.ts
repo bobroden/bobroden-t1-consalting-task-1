@@ -1,10 +1,14 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import { Component, Inject, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { MatChipInputEvent } from '@angular/material/chips';
 import { FormBuilder } from '@angular/forms';
 
 import { TaskService } from '../services/task.service';
+import { CategoryService } from '../services/category.service';
 
 import { Task } from '../interfaces/task';
 
@@ -15,10 +19,15 @@ import { Task } from '../interfaces/task';
 })
 export class ChangingTaskComponent implements OnInit {
 
+  separatorKeysCodes: number[] = [ENTER, COMMA];
+
+  @ViewChild('categoryInput') categoryInput: ElementRef<HTMLInputElement>;
+
   constructor(
     public dialogRef: MatDialogRef<ChangingTaskComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Task,
     public taskService: TaskService,
+    public categoryService: CategoryService,
     private fb: FormBuilder) {}
 
   changingTaskForm = this.fb.group({
@@ -69,6 +78,44 @@ export class ChangingTaskComponent implements OnInit {
         };
       }
       return;
+    }
+  }
+
+  add(event: MatChipInputEvent): void {
+    const value = (event.value || '').trim();
+    if (value) {
+      this.data.category?.push(value);
+    }
+    event.chipInput!.clear();
+
+    this.changingTaskForm.controls['categoryFormControl'].setValue(null);
+  }
+
+  remove(category: string): void {
+    const index = this.data.category?.indexOf(category);
+
+    if (index && index !== -1) {
+      this.data.category?.splice(index, 1);
+    }
+  }
+
+  selected(event: MatAutocompleteSelectedEvent): void {
+    this.data.category?.push(event.option.viewValue);
+    this.categoryInput.nativeElement.value = '';
+    this.changingTaskForm.controls['categoryFormControl'].setValue(null);
+  }
+
+  onCatRemoved(cat: string) {
+    const categories = this.changingTaskForm.controls['categoryFormControl'].value as string[];
+    this.removeFirst(categories, cat);
+    this.changingTaskForm.controls['categoryFormControl'].setValue(categories); // To trigger change detection
+  }
+
+  private removeFirst(array: any, toRemove: any): void {
+
+    const index = array.indexOf(toRemove);
+    if (index !== -1) {
+      array.splice(index, 1);
     }
   }
 

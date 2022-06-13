@@ -41,7 +41,11 @@
 
             <ng-container matColumnDef="category">
                 <th class="list-of-tasks__title" mat-header-cell *matHeaderCellDef mat-sort-header> Category </th>
-                <td class="list-of-tasks__value" mat-cell *matCellDef="let task"> {{task.category}} </td>
+                <td class="list-of-tasks__value" mat-cell *matCellDef="let task">
+                    <mat-chip-list aria-label="Category selection">
+                        <mat-chip *ngFor="let category of task.category">{{category}}</mat-chip>
+                    </mat-chip-list>
+                </td>
             </ng-container>
 
             <ng-container matColumnDef="actions">

@@ -57,14 +57,15 @@ export class ListOfTasksComponent implements AfterViewInit, OnDestroy {
         startDate: null,
         endDate: null,
         priority: null,
-        category: null
+        category: []
       }
     });
 
     this.dialogCreateSub = dialogRef.afterClosed().subscribe(result => {
       let newTask: Task = {
         id: +result.id,
-        name: result.name
+        name: result.name,
+        category: []
       };
       if(new Date(result.startDate) !== null){
         newTask.startDate = result.startDate
@@ -99,7 +100,8 @@ export class ListOfTasksComponent implements AfterViewInit, OnDestroy {
     this.dialogChangeSub = dialogRef.afterClosed().subscribe(result => {
       let changingTask: Task = {
         id: +result.id,
-        name: result.name
+        name: result.name,
+        category: result.category
       };
       if(new Date(result.startDate) !== null){
         changingTask.startDate = result.startDate

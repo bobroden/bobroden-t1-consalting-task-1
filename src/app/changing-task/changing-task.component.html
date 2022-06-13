@@ -1,6 +1,6 @@
 <div class="changing-task">
     <h1 mat-dialog-title class="changing-task__title">Change task</h1>
-    <div mat-dialog-content class="creatchanging__content">
+    <div mat-dialog-content class="changing-task__content">
         <form [formGroup]="changingTaskForm">
             <mat-form-field appearance="fill"  class="changing-task__id-input">
                 <mat-label>ID</mat-label>
@@ -34,11 +34,20 @@
             </mat-form-field>
             <mat-form-field appearance="fill" class="changing-task__category-select">
                 <mat-label>Select category</mat-label>
-                <mat-select formControlName="categoryFormControl">
-                    <mat-option value="one">one</mat-option>
-                    <mat-option value="two">two</mat-option>
-                    <mat-option value="three">three</mat-option>
-                </mat-select>
+                <mat-select formControlName="categoryFormControl" multiple>
+                    <mat-select-trigger>
+                      <mat-chip-list>
+                        <mat-chip *ngFor="let category of data.category"
+                          [removable]="true" (removed)="onCatRemoved(category)" color="accent" selected>
+                          {{ category }}
+                          <mat-icon matChipRemove>cancel</mat-icon>
+                        </mat-chip>
+                      </mat-chip-list>
+                    </mat-select-trigger>
+                    <mat-option *ngFor="let category of categoryService.listOfCategories" [value]="category">
+                      {{ category }}
+                    </mat-option>
+                  </mat-select>
             </mat-form-field>
             <mat-error *ngIf="changingTaskForm.errors && !changingTaskForm.controls['nameFormControl'].hasError('minlength') && !changingTaskForm.controls['nameFormControl'].hasError('required')">
                 Start date must be less than or equal to the end date

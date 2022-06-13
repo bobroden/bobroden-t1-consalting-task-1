@@ -1,10 +1,14 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { Component, Inject, OnDestroy, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable, startWith, map } from 'rxjs';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { MatChipInputEvent } from '@angular/material/chips';
 import { FormBuilder } from '@angular/forms';
 
 import { TaskService } from '../services/task.service';
+import { CategoryService } from '../services/category.service';
 
 import { Task } from '../interfaces/task';
 
@@ -13,13 +17,18 @@ import { Task } from '../interfaces/task';
   templateUrl: './creating-task.component.html',
   styleUrls: ['./creating-task.component.scss']
 })
-export class CreatingTaskComponent implements OnInit, OnDestroy {  
+export class CreatingTaskComponent implements OnInit, OnDestroy {
+
+  separatorKeysCodes: number[] = [ENTER, COMMA];
+
+  @ViewChild('categoryInput') categoryInput: ElementRef<HTMLInputElement>;
 
   constructor(
     public dialogRef: MatDialogRef<CreatingTaskComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Task,
     public taskService: TaskService,
-    private fb: FormBuilder) {}
+    public categoryService: CategoryService,
+    private fb: FormBuilder) { }
 
   newTaskForm = this.fb.group({
     idFormControl: [{value: this.taskService.listOfTasks.length, disabled: true}, Validators.required],
@@ -69,6 +78,20 @@ export class CreatingTaskComponent implements OnInit, OnDestroy {
         };
       }
       return;
+    }
+  }
+
+  onCatRemoved(cat: string) {
+    const categories = this.newTaskForm.controls['categoryFormControl'].value as string[];
+    this.removeFirst(categories, cat);
+    this.newTaskForm.controls['categoryFormControl'].setValue(categories); // To trigger change detection
+  }
+
+  private removeFirst(array: any, toRemove: any): void {
+
+    const index = array.indexOf(toRemove);
+    if (index !== -1) {
+      array.splice(index, 1);
     }
   }
 

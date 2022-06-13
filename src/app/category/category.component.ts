@@ -5,6 +5,7 @@ import { Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 import { CategoryService } from '../services/category.service';
+import { TaskService } from '../services/task.service';
 
 @Component({
   selector: 'app-category',
@@ -31,7 +32,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
 
   isChange = false;
 
-  constructor(public categoryService: CategoryService) {
+  constructor(public categoryService: CategoryService, private taskService: TaskService) {
     this.dataSource = new MatTableDataSource(this.categoryService.listOfCategories);
   }
 
@@ -49,7 +50,6 @@ export class CategoryComponent implements OnInit, OnDestroy {
     if(this.addFormControl.valid && this.addInputValue.trim() !== '') {
       this.categoryService.add(this.addInputValue.trim());
       this.dataSource = new MatTableDataSource(this.categoryService.listOfCategories);
-      this.addFormControl.setValue('');
     }
   }
 
@@ -69,6 +69,16 @@ export class CategoryComponent implements OnInit, OnDestroy {
     if(this.changeFormControl.valid && this.changeInputValue.trim() !== '') {
       this.categoryService.changeCategory(this.oldChangeValue, this.changeInputValue.trim());
       this.dataSource = new MatTableDataSource(this.categoryService.listOfCategories);
+      
+      this.taskService.listOfTasks.forEach(item => {
+        if(item.category.length !== 0) {
+          for(let i = 0; i < item.category.length; i++) {
+            if(this.oldChangeValue === item.category[i])
+            item.category[i] = this.changeInputValue.trim()
+          }
+        }
+      })
+
       this.isChange = false;
       this.changeFormControl.disable();
       this.oldChangeValue = '';

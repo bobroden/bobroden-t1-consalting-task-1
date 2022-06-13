@@ -34,11 +34,20 @@
             </mat-form-field>
             <mat-form-field appearance="fill" class="creating-task__category-select">
                 <mat-label>Select category</mat-label>
-                <mat-select formControlName="categoryFormControl">
-                    <mat-option value="one">one</mat-option>
-                    <mat-option value="two">two</mat-option>
-                    <mat-option value="three">three</mat-option>
-                </mat-select>
+                <mat-select formControlName="categoryFormControl" multiple>
+                    <mat-select-trigger>
+                      <mat-chip-list>
+                        <mat-chip *ngFor="let category of data.category"
+                          [removable]="true" (removed)="onCatRemoved(category)" color="accent" selected>
+                          {{ category }}
+                          <mat-icon matChipRemove>cancel</mat-icon>
+                        </mat-chip>
+                      </mat-chip-list>
+                    </mat-select-trigger>
+                    <mat-option *ngFor="let category of categoryService.listOfCategories" [value]="category">
+                      {{ category }}
+                    </mat-option>
+                  </mat-select>
             </mat-form-field>
             <mat-error *ngIf="newTaskForm.errors && !newTaskForm.controls['nameFormControl'].hasError('minlength') && !newTaskForm.controls['nameFormControl'].hasError('required')">
                 Start date must be less than or equal to the end date
