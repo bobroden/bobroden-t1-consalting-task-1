@@ -1,5 +1,5 @@
 <div class="list-of-tasks">
-
+ф
     <div class="list-of-tasks__button-container">
         <button mat-raised-button (click)="openCreatingDialog()" color="primary" class="list-of-tasks__add-button">
             Add task
@@ -12,7 +12,7 @@
     </mat-form-field>
 
     <div>
-        <table *ngIf="taskService.listOfTasks.length !== 0" class="list-of-tasks__table mat-elevation-z8" mat-table [dataSource]="dataSource" matSort>
+        <table class="list-of-tasks__table mat-elevation-z8" mat-table [dataSource]="dataSource" matSort>
 
             <ng-container matColumnDef="id">
                 <th class="list-of-tasks__title" mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>

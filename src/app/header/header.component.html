@@ -1,12 +1,13 @@
 <header class="header">
     <div class="header__container">
         <nav class="header__navigation">
-            <button mat-raised-button color="accent" [disabled]="!userService.isSigned" class="header__link">Tasks</button>
-            <button mat-raised-button color="accent" [disabled]="!userService.isSigned" class="header__link">Categories</button>
+            <button routerLink="/tasks" mat-raised-button color="accent" [disabled]="!userService.isSigned" class="header__link">Tasks</button>
+            <button routerLink="/categories" mat-raised-button color="accent" [disabled]="!userService.isSigned" class="header__link">Categories</button>
         </nav>
         <div class="header__button-container">
-            <button mat-raised-button color="accent" [disabled]="!userService.isSigned" class="header__save-button">Save</button>
-            <button mat-raised-button color="warn" class="header__sign-out-button">Sign Out</button>
+            <button mat-raised-button color="accent" [disabled]="!userService.isSigned" class="header__save-button" (click)="saveChanges()">Save</button>
+            <button mat-raised-button color="warn" *ngIf="userService.isSigned" class="header__sign-out-button" (click)="signOut()">Sign Out</button>
+            <button routerLink="/auth" mat-raised-button color="warn" *ngIf="!userService.isSigned" class="header__sign-in-button" (click)="signIn()">Sign In</button>
         </div>
     </div>
 </header>

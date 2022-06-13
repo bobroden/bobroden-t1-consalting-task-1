@@ -11,7 +11,7 @@ import { MainUserInfo } from '../interfaces/mainUserInfo';
 export class UserService {
 
   listOfUsers: User[] = [];
-  isSigned = false;
+  isSigned = true;
   currentUser: User;
 
   constructor(private localStorageService: LocalStorageService) {

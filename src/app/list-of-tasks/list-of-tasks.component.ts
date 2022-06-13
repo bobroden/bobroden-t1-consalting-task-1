@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, ViewChild, OnDestroy} from '@angular/core';
+import { Component, AfterViewInit, ViewChild, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { MatSort } from '@angular/material/sort';
@@ -40,9 +40,12 @@ export class ListOfTasksComponent implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.dialogCreateSub.unsubscribe();
-    this.dialogChangeSub.unsubscribe();
-    this.dialogDeleteSub.unsubscribe();
+    if(this.dialogCreateSub)
+      this.dialogCreateSub.unsubscribe();
+    if(this.dialogChangeSub)
+      this.dialogChangeSub.unsubscribe();
+    if(this.dialogDeleteSub)
+      this.dialogDeleteSub.unsubscribe();
   }
 
   applyFilter(event: Event): void {

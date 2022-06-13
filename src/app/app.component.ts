@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+
+import { UserService } from './services/user.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +9,14 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 't1-consulting-task-1';
+  
+  constructor(private router: Router, private userService: UserService) {
+    if(this.userService.isSigned) {
+      this.router.navigateByUrl('/tasks');
+    }
+    else {
+      this.router.navigateByUrl('/auth');
+    }
+  }
+
 }

@@ -29,7 +29,7 @@
             Change
         </button>
     </div>
-    <table *ngIf="categoryService.listOfCategories.length !== 0" class="category-block__table mat-elevation-z8" mat-table [dataSource]="dataSource">
+    <table class="category-block__table mat-elevation-z8" mat-table [dataSource]="dataSource">
 
         <ng-container matColumnDef="name">
             <th class="categoty-block__title" mat-header-cell *matHeaderCellDef> Name </th>

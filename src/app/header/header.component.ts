@@ -14,4 +14,16 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  saveChanges(): void {
+
+  }
+
+  signOut(): void {
+
+  }
+
+  signIn(): void {
+
+  }
+
 }
