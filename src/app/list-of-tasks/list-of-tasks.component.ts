@@ -41,6 +41,7 @@ export class ListOfTasksComponent implements AfterViewInit, OnDestroy {
   ngOnDestroy(): void {
     this.dialogCreateSub.unsubscribe();
     this.dialogChangeSub.unsubscribe();
+    this.dialogDeleteSub.unsubscribe();
   }
 
   applyFilter(event: Event): void {
@@ -50,7 +51,6 @@ export class ListOfTasksComponent implements AfterViewInit, OnDestroy {
 
   openCreatingDialog(): void {
     const dialogRef = this.dialog.open(CreatingTaskComponent, {
-      width: '30%',
       data: {
         id: this.taskService.listOfTasks.length,
         name: '',
@@ -86,7 +86,6 @@ export class ListOfTasksComponent implements AfterViewInit, OnDestroy {
 
   openChangingDialog(task: Task) {
     const dialogRef = this.dialog.open(ChangingTaskComponent, {
-      width: '30%',
       data: {
         id: +task.id,
         name: task.name,
@@ -122,7 +121,6 @@ export class ListOfTasksComponent implements AfterViewInit, OnDestroy {
 
   openDeletingDialog(task: Task) {
     const dialogRef = this.dialog.open(DeletingTaskComponent, {
-      width: '30%',
       data: {
         id: +task.id,
         name: task.name,

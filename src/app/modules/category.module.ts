@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MaterialModule } from './material.module';
 
-import { AuthorizationComponent } from '../authorization/authorization.component';
+import { CategoryComponent } from '../category/category.component';
 
 @NgModule({
   imports: [
@@ -13,7 +13,11 @@ import { AuthorizationComponent } from '../authorization/authorization.component
     FormsModule,
     ReactiveFormsModule
   ],
-  declarations: [AuthorizationComponent],
-  exports: [AuthorizationComponent]
+  declarations: [
+    CategoryComponent
+  ],
+  exports: [
+    CategoryComponent
+  ]
 })
-export class AuthorizationModule { }
+export class CategoryModule { }

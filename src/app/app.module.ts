@@ -6,6 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 
 import { AuthorizationModule } from './modules/authorization.module';
 import { TasksModule } from './modules/tasks.module';
+import { CategoryModule } from './modules/category.module';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -23,7 +24,8 @@ import { ErrorComponent } from './error/error.component';
     MatDialogModule,
     MatButtonModule,
     AuthorizationModule,
-    TasksModule
+    TasksModule,
+    CategoryModule
   ],
   providers: [],
   bootstrap: [AppComponent]

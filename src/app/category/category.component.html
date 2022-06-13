@@ -1,0 +1,51 @@
+<div class="category-block">
+    <div class="category-block__container">
+        <mat-form-field class="category-block__input-container">
+            <mat-label class="category-block__label">Add a category</mat-label>
+            <input class="category-block__input" [formControl]="addFormControl" matInput placeholder="add">
+            <mat-error *ngIf="addFormControl.hasError('minlength') && !addFormControl.hasError('required')">
+                Please enter a category at least 3 characters long
+            </mat-error>
+            <mat-error *ngIf="addFormControl.hasError('required')">
+                Category is <strong>required</strong>
+            </mat-error>
+        </mat-form-field>
+        <button mat-raised-button (click)="addCategory()" color="primary" class="category-block__add-button">
+            Add
+        </button>
+    </div>
+    <div class="category-block__container">
+        <mat-form-field class="category-block__input-container">
+            <mat-label class="category-block__label">Change a category</mat-label>
+            <input class="category-block__input" [formControl]="changeFormControl" matInput placeholder="change">
+            <mat-error *ngIf="changeFormControl.hasError('minlength') && !changeFormControl.hasError('required')">
+                Please enter a category at least 3 characters long
+            </mat-error>
+            <mat-error *ngIf="changeFormControl.hasError('required')">
+                Category is <strong>required</strong>
+            </mat-error>
+        </mat-form-field>
+        <button [disabled]="!isChange" mat-raised-button (click)="changeCategory()" color="accent" class="category-block__change-button">
+            Change
+        </button>
+    </div>
+    <table *ngIf="categoryService.listOfCategories.length !== 0" class="category-block__table mat-elevation-z8" mat-table [dataSource]="dataSource">
+
+        <ng-container matColumnDef="name">
+            <th class="categoty-block__title" mat-header-cell *matHeaderCellDef> Name </th>
+            <td class="categoty-block__value" mat-cell *matCellDef="let category">{{category}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+            <th class="categoty-block__title" mat-header-cell *matHeaderCellDef> Actions </th>
+            <td class="categoty-block__value" mat-cell *matCellDef="let category">
+                <mat-icon class="categoty-block__delete-button" (click)="deleteCategory(category)">delete</mat-icon>
+                <mat-icon class="category-block__edit-button" (click)="changeMode(category)">edit</mat-icon>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColums"></tr>
+        <tr mat-row *matRowDef="let category; columns: displayedColums;"></tr>
+        
+    </table>
+</div>
