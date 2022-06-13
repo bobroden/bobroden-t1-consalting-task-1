@@ -1,11 +1,8 @@
-import {COMMA, ENTER} from '@angular/cdk/keycodes';
-import { Component, Inject, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { FormGroup, Validators } from '@angular/forms';
+import { Component, Inject, OnInit } from '@angular/core';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs';
+
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
-import { MatChipInputEvent } from '@angular/material/chips';
-import { FormBuilder } from '@angular/forms';
 
 import { TaskService } from '../services/task.service';
 import { CategoryService } from '../services/category.service';
@@ -18,10 +15,6 @@ import { Task } from '../interfaces/task';
   styleUrls: ['./changing-task.component.scss']
 })
 export class ChangingTaskComponent implements OnInit {
-
-  separatorKeysCodes: number[] = [ENTER, COMMA];
-
-  @ViewChild('categoryInput') categoryInput: ElementRef<HTMLInputElement>;
 
   constructor(
     public dialogRef: MatDialogRef<ChangingTaskComponent>,
@@ -79,30 +72,6 @@ export class ChangingTaskComponent implements OnInit {
       }
       return;
     }
-  }
-
-  add(event: MatChipInputEvent): void {
-    const value = (event.value || '').trim();
-    if (value) {
-      this.data.category?.push(value);
-    }
-    event.chipInput!.clear();
-
-    this.changingTaskForm.controls['categoryFormControl'].setValue(null);
-  }
-
-  remove(category: string): void {
-    const index = this.data.category?.indexOf(category);
-
-    if (index && index !== -1) {
-      this.data.category?.splice(index, 1);
-    }
-  }
-
-  selected(event: MatAutocompleteSelectedEvent): void {
-    this.data.category?.push(event.option.viewValue);
-    this.categoryInput.nativeElement.value = '';
-    this.changingTaskForm.controls['categoryFormControl'].setValue(null);
   }
 
   onCatRemoved(cat: string) {

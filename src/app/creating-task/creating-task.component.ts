@@ -1,11 +1,8 @@
-import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { Component, Inject, OnDestroy, OnInit, ElementRef, ViewChild } from '@angular/core';
-import { FormGroup, Validators } from '@angular/forms';
-import { Subscription, Observable, startWith, map } from 'rxjs';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { Subscription } from 'rxjs';
+
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
-import { MatChipInputEvent } from '@angular/material/chips';
-import { FormBuilder } from '@angular/forms';
 
 import { TaskService } from '../services/task.service';
 import { CategoryService } from '../services/category.service';
@@ -18,10 +15,6 @@ import { Task } from '../interfaces/task';
   styleUrls: ['./creating-task.component.scss']
 })
 export class CreatingTaskComponent implements OnInit, OnDestroy {
-
-  separatorKeysCodes: number[] = [ENTER, COMMA];
-
-  @ViewChild('categoryInput') categoryInput: ElementRef<HTMLInputElement>;
 
   constructor(
     public dialogRef: MatDialogRef<CreatingTaskComponent>,

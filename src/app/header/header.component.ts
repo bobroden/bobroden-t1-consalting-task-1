@@ -1,25 +1,17 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { Component, OnInit } from '@angular/core';
 
-import { CategoryComponent } from '../category/category.component';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit, OnDestroy {
+export class HeaderComponent implements OnInit {
 
-  constructor(public dialog: MatDialog) { }
+  constructor(public userService: UserService) { }
 
   ngOnInit(): void {
-  }
-
-  ngOnDestroy(): void {
-  }
-
-  openCategoryDialog(): void {
-    this.dialog.open(CategoryComponent);
   }
 
 }

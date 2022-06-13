@@ -1,8 +1,8 @@
-import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
-import { MatTable, MatTableDataSource } from '@angular/material/table';
-import { FormControl } from '@angular/forms';
-import { Validators } from '@angular/forms';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
+
+import { MatTable, MatTableDataSource } from '@angular/material/table';
 
 import { CategoryService } from '../services/category.service';
 import { TaskService } from '../services/task.service';

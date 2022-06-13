@@ -1,8 +1,9 @@
 import { Component, AfterViewInit, ViewChild, OnDestroy} from '@angular/core';
+import { Subscription } from 'rxjs';
+
 import { MatSort } from '@angular/material/sort';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
-import { Subscription } from 'rxjs';
 
 import { CreatingTaskComponent } from '../creating-task/creating-task.component';
 import { ChangingTaskComponent } from '../changing-task/changing-task.component';

@@ -1,9 +1,12 @@
 <header class="header">
-    <nav class="header__navigation">
-        Table
-        
-    </nav>
-    <div class="header__button-container">
-        <button class="header__category-button" (click)="openCategoryDialog()">Categories</button>
+    <div class="header__container">
+        <nav class="header__navigation">
+            <button mat-raised-button color="accent" [disabled]="!userService.isSigned" class="header__link">Tasks</button>
+            <button mat-raised-button color="accent" [disabled]="!userService.isSigned" class="header__link">Categories</button>
+        </nav>
+        <div class="header__button-container">
+            <button mat-raised-button color="accent" [disabled]="!userService.isSigned" class="header__save-button">Save</button>
+            <button mat-raised-button color="warn" class="header__sign-out-button">Sign Out</button>
+        </div>
     </div>
 </header>
