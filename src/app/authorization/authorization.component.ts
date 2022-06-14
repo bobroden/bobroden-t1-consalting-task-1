@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 import { MatDialog } from '@angular/material/dialog';
 
@@ -36,7 +37,7 @@ export class AuthorizationComponent implements OnInit, OnDestroy {
   emailStatusSub: Subscription;
   passwodStatusSub: Subscription;
 
-  constructor(private userService: UserService, private taskService: TaskService, private categoryService: CategoryService, public dialog: MatDialog) { }
+  constructor(private userService: UserService, private taskService: TaskService, private categoryService: CategoryService, public dialog: MatDialog, private router: Router) { }
 
   ngOnInit(): void {
     this.emailValueSub = this.emailFormControl.valueChanges.subscribe(value => this.emailInputValue = value ? value : '');
@@ -76,6 +77,7 @@ export class AuthorizationComponent implements OnInit, OnDestroy {
       this.userService.isSigned = true;
       this.taskService.listOfTasks = this.userService.currentUser.listOfTasks;
       this.categoryService.listOfCategories = this.userService.currentUser.listOfCategories;
+      this.router.navigateByUrl('/tasks');
     }
   }
 
@@ -88,6 +90,7 @@ export class AuthorizationComponent implements OnInit, OnDestroy {
       this.userService.addUser(user);
       this.categoryService.listOfCategories = [];
       this.taskService.listOfTasks = [];
+      this.router.navigateByUrl('/tasks');
     }
     else {
       this.openDialog();

@@ -66,26 +66,29 @@ export class ListOfTasksComponent implements AfterViewInit, OnDestroy {
     });
 
     this.dialogCreateSub = dialogRef.afterClosed().subscribe(result => {
-      let newTask: Task = {
-        id: +result.id,
-        name: result.name,
-        category: []
-      };
-      if(new Date(result.startDate) !== null){
-        newTask.startDate = result.startDate
+      try {
+        let newTask: Task = {
+          id: +result.id,
+          name: result.name,
+          category: []
+        };
+        if(new Date(result.startDate) !== null){
+          newTask.startDate = result.startDate
+        }
+        if(new Date(result.endDate) !== null){
+          newTask.endDate = result.endDate
+        }
+        if(result.priority !== null){
+          newTask.priority = result.priority
+        }
+        if(result.category !== null){
+          newTask.category = result.category
+        }
+        this.taskService.add(newTask);
+        this.dataSource = new MatTableDataSource(this.taskService.listOfTasks);
+        this.dataSource.sort = this.sort;
       }
-      if(new Date(result.endDate) !== null){
-        newTask.endDate = result.endDate
-      }
-      if(result.priority !== null){
-        newTask.priority = result.priority
-      }
-      if(result.category !== null){
-        newTask.category = result.category
-      }
-      this.taskService.add(newTask);
-      this.dataSource = new MatTableDataSource(this.taskService.listOfTasks);
-      this.dataSource.sort = this.sort;
+      catch {}
     })
   }
 
@@ -102,26 +105,29 @@ export class ListOfTasksComponent implements AfterViewInit, OnDestroy {
     });
 
     this.dialogChangeSub = dialogRef.afterClosed().subscribe(result => {
-      let changingTask: Task = {
-        id: +result.id,
-        name: result.name,
-        category: result.category
-      };
-      if(new Date(result.startDate) !== null){
-        changingTask.startDate = result.startDate
+      try {
+        let changingTask: Task = {
+          id: +result.id,
+          name: result.name,
+          category: result.category
+        };
+        if(new Date(result.startDate) !== null){
+          changingTask.startDate = result.startDate
+        }
+        if(new Date(result.endDate) !== null){
+          changingTask.endDate = result.endDate
+        }
+        if(result.priority !== null){
+          changingTask.priority = result.priority
+        }
+        if(result.category !== null){
+          changingTask.category = result.category
+        }
+        this.taskService.changeTask(changingTask);
+        this.dataSource = new MatTableDataSource(this.taskService.listOfTasks);
+        this.dataSource.sort = this.sort;
       }
-      if(new Date(result.endDate) !== null){
-        changingTask.endDate = result.endDate
-      }
-      if(result.priority !== null){
-        changingTask.priority = result.priority
-      }
-      if(result.category !== null){
-        changingTask.category = result.category
-      }
-      this.taskService.changeTask(changingTask);
-      this.dataSource = new MatTableDataSource(this.taskService.listOfTasks);
-      this.dataSource.sort = this.sort;
+      catch {}
     })
   }
 
@@ -134,10 +140,13 @@ export class ListOfTasksComponent implements AfterViewInit, OnDestroy {
     });
 
     this.dialogDeleteSub = dialogRef.afterClosed().subscribe(result => {
-      let deletingId = +result.id;
-      this.taskService.delete(deletingId);
-      this.dataSource = new MatTableDataSource(this.taskService.listOfTasks);
-      this.dataSource.sort = this.sort;
+      try {
+        let deletingId = +result.id;
+        this.taskService.delete(deletingId);
+        this.dataSource = new MatTableDataSource(this.taskService.listOfTasks);
+        this.dataSource.sort = this.sort;
+      }
+      catch {}
     })
   }
 
