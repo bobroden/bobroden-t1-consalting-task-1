@@ -16,7 +16,6 @@ export class CategoryService {
       console.log(this.listOfCategories);
       return category;
     }
-    alert('There is already such a category!');
   }
 
   delete(category: string): string | null {

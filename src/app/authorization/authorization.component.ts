@@ -64,8 +64,10 @@ export class AuthorizationComponent implements OnInit, OnDestroy {
     this.passwodStatusSub.unsubscribe();
   }
 
-  openDialog() {
-    this.dialog.open(ErrorComponent);
+  openDialog(data: string) {
+    this.dialog.open(ErrorComponent, {
+      data: data
+    })
   }
 
   signIn(): void {
@@ -78,6 +80,9 @@ export class AuthorizationComponent implements OnInit, OnDestroy {
       this.taskService.listOfTasks = this.userService.currentUser.listOfTasks;
       this.categoryService.listOfCategories = this.userService.currentUser.listOfCategories;
       this.router.navigateByUrl('/tasks');
+    }
+    else {
+      this.openDialog('Sorry, but no such user was found :(');
     }
   }
 
@@ -93,7 +98,7 @@ export class AuthorizationComponent implements OnInit, OnDestroy {
       this.router.navigateByUrl('/tasks');
     }
     else {
-      this.openDialog();
+      this.openDialog('Sorry, but we already have such a user :(');
     }
   }
 

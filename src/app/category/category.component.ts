@@ -3,9 +3,12 @@ import { FormControl, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 import { MatTable, MatTableDataSource } from '@angular/material/table';
+import { MatDialog } from '@angular/material/dialog';
 
 import { CategoryService } from '../services/category.service';
 import { TaskService } from '../services/task.service';
+
+import { ErrorComponent } from '../error/error.component';
 
 @Component({
   selector: 'app-category',
@@ -32,7 +35,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
 
   isChange = false;
 
-  constructor(public categoryService: CategoryService, private taskService: TaskService) {
+  constructor(public categoryService: CategoryService, private taskService: TaskService, public dialog: MatDialog,) {
     this.dataSource = new MatTableDataSource(this.categoryService.listOfCategories);
   }
 
@@ -46,10 +49,20 @@ export class CategoryComponent implements OnInit, OnDestroy {
     this.changeValueSub.unsubscribe();
   }
 
+  openDialog(data: string) {
+    this.dialog.open(ErrorComponent, {
+      data: data
+    })
+  }
+
   addCategory(): void {
     if(this.addFormControl.valid && this.addInputValue.trim() !== '') {
+      const index = this.categoryService.listOfCategories.length;
       this.categoryService.add(this.addInputValue.trim());
       this.dataSource = new MatTableDataSource(this.categoryService.listOfCategories);
+      if(index === this.categoryService.listOfCategories.length) {
+        this.openDialog('There is already such a category!');
+      }
     }
   }
 
