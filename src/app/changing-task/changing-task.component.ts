@@ -23,7 +23,7 @@ export class ChangingTaskComponent implements OnInit {
     public categoryService: CategoryService,
     private fb: FormBuilder) {}
 
-  changingTaskForm = this.fb.group({
+  changingTaskForm: FormGroup = this.fb.group({
     idFormControl: [{value: this.data.id, disabled: true}, Validators.required],
     nameFormControl: [this.data.name, Validators.compose([Validators.required, Validators.minLength(3)])],
     startDateFormControl: [this.data.startDate],
@@ -39,7 +39,7 @@ export class ChangingTaskComponent implements OnInit {
   prioritySub: Subscription;
   categorySub: Subscription;
 
-  cancel(){
+  cancel(): void {
     this.dialogRef.close();
   }
 
@@ -61,7 +61,7 @@ export class ChangingTaskComponent implements OnInit {
     this.categorySub.unsubscribe();
   }
 
-  datesValidator(startDate: string, endDate: string) {
+  datesValidator(startDate: string, endDate: string): object {
     return (group: FormGroup) => {
       let start = group.controls[startDate];
       let end = group.controls[endDate];
@@ -74,14 +74,13 @@ export class ChangingTaskComponent implements OnInit {
     }
   }
 
-  onCatRemoved(cat: string) {
+  onCatRemoved(cat: string): void {
     const categories = this.changingTaskForm.controls['categoryFormControl'].value as string[];
     this.removeFirst(categories, cat);
-    this.changingTaskForm.controls['categoryFormControl'].setValue(categories); // To trigger change detection
+    this.changingTaskForm.controls['categoryFormControl'].setValue(categories);
   }
 
-  private removeFirst(array: any, toRemove: any): void {
-
+  private removeFirst<T>(array: T[], toRemove: T): void {
     const index = array.indexOf(toRemove);
     if (index !== -1) {
       array.splice(index, 1);

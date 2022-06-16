@@ -13,7 +13,7 @@ import { MainUserInfo } from '../interfaces/mainUserInfo';
 export class UserService {
 
   listOfUsers: User[] = [];
-  isSigned = false;
+  isSigned: boolean = false;
   currentUser: User;
 
   constructor(private localStorageService: LocalStorageService, private categoryService: CategoryService, private taskService: TaskService) {
@@ -53,7 +53,7 @@ export class UserService {
     return false;
   }
 
-  checkSameLogin(user: MainUserInfo) {
+  checkSameLogin(user: MainUserInfo): boolean {
     for(let i = 0; i < this.listOfUsers.length; i++) {
       if(user.login === this.listOfUsers[i].login) {
         return true;
@@ -62,7 +62,7 @@ export class UserService {
     return false;
   }
 
-  saveChanges() {
+  saveChanges(): void {
     for(let i = 0; i < this.listOfUsers.length; i++) {
       if(this.currentUser.id === this.listOfUsers[i].id) {
         this.currentUser.listOfCategories = this.categoryService.listOfCategories;

@@ -1,6 +1,7 @@
 .list-of-tasks {
     width: 80%;
     margin: 0 auto;
+    padding-bottom: 30px;
 
     &__button-container {
         padding: 16px 0;
@@ -15,8 +16,17 @@
         width: 100%;
     }
 
+    &__table-container {
+        overflow-x: auto;
+        overflow-y: hidden;
+    }
+
     &__table {
         width: 100%;
+
+        td {
+            min-width: 80px;
+        }
     }
 
     &__delete-button, &__edit-button {

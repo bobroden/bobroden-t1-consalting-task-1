@@ -9,8 +9,27 @@
         }
     }
 
+    &__category-select {
+        
+        mat-select {
+            padding: 10px 0;
+        }
+    }
+
     &__button-container {
         display: flex;
         justify-content: center;
+    }
+}
+
+@media (max-width: 420px) {
+    .changing-task {
+       
+        &__category-select {
+            
+            mat-select {
+                overflow-y: auto;
+            }
+        }
     }
 }

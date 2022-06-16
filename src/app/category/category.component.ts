@@ -22,18 +22,18 @@ export class CategoryComponent implements OnInit, OnDestroy {
 
   @ViewChild(MatTable) table: MatTable<Task>;
 
-  addFormControl = new FormControl('', [Validators.required, Validators.minLength(3)]);
-  changeFormControl = new FormControl({value: '', disabled: true}, [Validators.required, Validators.minLength(3)]);
+  addFormControl: FormControl = new FormControl('', [Validators.required, Validators.minLength(3)]);
+  changeFormControl: FormControl = new FormControl({value: '', disabled: true}, [Validators.required, Validators.minLength(3)]);
 
   addValueSub: Subscription;
   changeValueSub: Subscription;
 
-  oldChangeValue = '';
+  oldChangeValue: string = '';
   
-  addInputValue = '';
-  changeInputValue = '';
+  addInputValue: string = '';
+  changeInputValue: string = '';
 
-  isChange = false;
+  isChange: boolean = false;
 
   constructor(public categoryService: CategoryService, private taskService: TaskService, public dialog: MatDialog,) {
     this.dataSource = new MatTableDataSource(this.categoryService.listOfCategories);
@@ -49,7 +49,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
     this.changeValueSub.unsubscribe();
   }
 
-  openDialog(data: string) {
+  openDialog(data: string): void {
     this.dialog.open(ErrorComponent, {
       data: data
     })

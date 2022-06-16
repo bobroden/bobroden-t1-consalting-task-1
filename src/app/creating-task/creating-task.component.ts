@@ -39,7 +39,7 @@ export class CreatingTaskComponent implements OnInit, OnDestroy {
   prioritySub: Subscription;
   categorySub: Subscription;
 
-  cancel(){
+  cancel(): void{
     this.dialogRef.close();
   }
 
@@ -61,7 +61,7 @@ export class CreatingTaskComponent implements OnInit, OnDestroy {
     this.categorySub.unsubscribe();
   }
 
-  datesValidator(startDate: string, endDate: string) {
+  datesValidator(startDate: string, endDate: string): object {
     return (group: FormGroup) => {
       let start = group.controls[startDate];
       let end = group.controls[endDate];
@@ -74,14 +74,13 @@ export class CreatingTaskComponent implements OnInit, OnDestroy {
     }
   }
 
-  onCatRemoved(cat: string) {
+  onCatRemoved(cat: string): void {
     const categories = this.newTaskForm.controls['categoryFormControl'].value as string[];
     this.removeFirst(categories, cat);
     this.newTaskForm.controls['categoryFormControl'].setValue(categories); // To trigger change detection
   }
 
-  private removeFirst(array: any, toRemove: any): void {
-
+  private removeFirst<T>(array: T[], toRemove: T): void {
     const index = array.indexOf(toRemove);
     if (index !== -1) {
       array.splice(index, 1);

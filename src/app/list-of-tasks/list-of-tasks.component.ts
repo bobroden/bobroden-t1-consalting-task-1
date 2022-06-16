@@ -92,7 +92,7 @@ export class ListOfTasksComponent implements AfterViewInit, OnDestroy {
     })
   }
 
-  openChangingDialog(task: Task) {
+  openChangingDialog(task: Task): void {
     const dialogRef = this.dialog.open(ChangingTaskComponent, {
       data: {
         id: +task.id,
@@ -131,7 +131,7 @@ export class ListOfTasksComponent implements AfterViewInit, OnDestroy {
     })
   }
 
-  openDeletingDialog(task: Task) {
+  openDeletingDialog(task: Task): void {
     const dialogRef = this.dialog.open(DeletingTaskComponent, {
       data: {
         id: +task.id,

@@ -1,7 +1,7 @@
 .header {
     background: #e91e63;
     height: 50px;
-    padding-top: 10px;
+    padding-bottom: 8px;
 
     &__container {
         display: flex;
@@ -11,11 +11,26 @@
         flex-wrap: wrap;
     }
 
+    &__navigation, &__button-container {
+        padding-top: 10px;
+    }
+
     &__link {
         margin-right: 10px;
     }
 
     &__save-button {
         margin-right: 10px;
+    }
+}
+
+@media (max-width: 420px) {
+    .header {
+        height: auto;
+
+        &__container {
+            max-width: 100%;
+            justify-content: space-around;
+        }
     }
 }

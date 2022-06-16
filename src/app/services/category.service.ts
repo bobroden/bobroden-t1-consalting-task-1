@@ -13,7 +13,6 @@ export class CategoryService {
     const index = this.listOfCategories.findIndex(item => item === category);
     if(index === -1) {
       this.listOfCategories.push(category);
-      console.log(this.listOfCategories);
       return category;
     }
   }
@@ -25,7 +24,6 @@ export class CategoryService {
       oldCategory = this.listOfCategories[index];
       this.listOfCategories.splice(index, 1);
     }
-    console.log(this.listOfCategories);
     return oldCategory;
   }
 

@@ -20,17 +20,17 @@ import { MainUserInfo } from '../interfaces/mainUserInfo';
 })
 export class AuthorizationComponent implements OnInit, OnDestroy {
 
-  emailFormControl = new FormControl('', [Validators.required, Validators.email]);
-  passwordFormControl = new FormControl('', [Validators.required, Validators.minLength(5), Validators.pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])/)]);
+  emailFormControl: FormControl = new FormControl('', [Validators.required, Validators.email]);
+  passwordFormControl: FormControl = new FormControl('', [Validators.required, Validators.minLength(5), Validators.pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])/)]);
 
-  isRegistration = false;
-  hide = true;
+  isRegistration: boolean = false;
+  hide: boolean = true;
 
-  emailInputValue = '';
-  passwordInputValue = '';
+  emailInputValue: string = '';
+  passwordInputValue: string = '';
 
-  isValidEmail = false;
-  isValidPassword = false;
+  isValidEmail: boolean = false;
+  isValidPassword: boolean = false;
 
   emailValueSub: Subscription;
   passwordValueSub: Subscription;
@@ -64,7 +64,7 @@ export class AuthorizationComponent implements OnInit, OnDestroy {
     this.passwodStatusSub.unsubscribe();
   }
 
-  openDialog(data: string) {
+  openDialog(data: string): void {
     this.dialog.open(ErrorComponent, {
       data: data
     })

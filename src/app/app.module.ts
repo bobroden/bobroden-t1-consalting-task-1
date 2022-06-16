@@ -14,7 +14,6 @@ import { CategoryModule } from './modules/category.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { ErrorComponent } from './error/error.component';
-import { FooterComponent } from './footer/footer.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ListOfTasksComponent } from './list-of-tasks/list-of-tasks.component';
 import { AuthorizationComponent } from './authorization/authorization.component';
@@ -35,7 +34,6 @@ const appRoutes: Routes = [
     AppComponent,
     HeaderComponent,
     ErrorComponent,
-    FooterComponent,
     PageNotFoundComponent,
   ],
   imports: [

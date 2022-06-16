@@ -11,7 +11,7 @@
         <input class="list-of-tasks__input" matInput (keyup)="applyFilter($event)" placeholder="filter" #input>
     </mat-form-field>
 
-    <div>
+    <div class="list-of-tasks__table-container">
         <table class="list-of-tasks__table mat-elevation-z8" mat-table [dataSource]="dataSource" matSort>
 
             <ng-container matColumnDef="id">

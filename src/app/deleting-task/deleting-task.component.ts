@@ -19,7 +19,7 @@ export class DeletingTaskComponent implements OnInit {
     public taskService: TaskService
     ) {}
 
-  cancel(){
+  cancel(): void {
     this.dialogRef.close();
   }
 

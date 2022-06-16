@@ -1,13 +1,12 @@
 .authorization {
-    width: 100%;
-    height: 100%;
-    position: fixed;
+    position: relative;
     display: flex;
     justify-content: center;
-    align-items: center;
 
     &__content {
         max-width: 300px;
+        position: absolute;
+        top: 100px;
     }
 
     &__registration-toggle {
