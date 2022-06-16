@@ -69,6 +69,15 @@ export class CategoryComponent implements OnInit, OnDestroy {
   deleteCategory(category: string): void {
     this.categoryService.delete(category);
     this.dataSource = new MatTableDataSource(this.categoryService.listOfCategories);
+
+    this.taskService.listOfTasks.forEach(item => {
+      if(item.category.length !== 0) {
+        for(let i = 0; i < item.category.length; i++) {
+          if(category === item.category[i])
+          item.category.splice(i, 1);
+        }
+      }
+    })
   }
 
   changeMode(category: string): void {

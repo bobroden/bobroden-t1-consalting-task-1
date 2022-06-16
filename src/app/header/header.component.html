@@ -6,6 +6,7 @@
         </nav>
         <div class="header__button-container">
             <button mat-raised-button color="accent" [disabled]="!userService.isSigned" class="header__save-button" (click)="saveChanges()">Save</button>
+            <button routerLink="/profile" mat-raised-button color="accent" [disabled]="!userService.isSigned" class="header__profile-button">Profile</button>
             <button mat-raised-button color="warn" *ngIf="userService.isSigned" class="header__sign-out-button" (click)="signOut()">Sign Out</button>
             <button routerLink="/auth" mat-raised-button color="warn" *ngIf="!userService.isSigned" class="header__sign-in-button">Sign In</button>
         </div>

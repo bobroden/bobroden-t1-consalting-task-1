@@ -19,12 +19,12 @@
         margin-right: 10px;
     }
 
-    &__save-button {
+    &__save-button, &__profile-button {
         margin-right: 10px;
     }
 }
 
-@media (max-width: 420px) {
+@media (max-width: 540px) {
     .header {
         height: auto;
 

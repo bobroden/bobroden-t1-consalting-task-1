@@ -18,6 +18,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { ListOfTasksComponent } from './list-of-tasks/list-of-tasks.component';
 import { AuthorizationComponent } from './authorization/authorization.component';
 import { CategoryComponent } from './category/category.component';
+import { ProfileComponent } from './profile/profile.component';
 
 import { IsAuthGuard } from './is-auth.guard';
 
@@ -25,6 +26,7 @@ const appRoutes: Routes = [
   { path: 'auth', component: AuthorizationComponent },
   { path: 'tasks', component: ListOfTasksComponent, canActivate: [IsAuthGuard] },
   { path: 'categories', component: CategoryComponent, canActivate: [IsAuthGuard] },
+  { path: 'profile', component: ProfileComponent, canActivate: [IsAuthGuard] },
   { path: '', redirectTo: '/tasks', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent },
 ]
@@ -34,7 +36,7 @@ const appRoutes: Routes = [
     AppComponent,
     HeaderComponent,
     ErrorComponent,
-    PageNotFoundComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,

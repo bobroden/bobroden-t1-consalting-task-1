@@ -62,6 +62,11 @@ export class UserService {
     return false;
   }
 
+  changeUserInfo(user: MainUserInfo) {
+    this.currentUser.login = user.login;
+    this.currentUser.password = user.password;
+  }
+
   saveChanges(): void {
     for(let i = 0; i < this.listOfUsers.length; i++) {
       if(this.currentUser.id === this.listOfUsers[i].id) {

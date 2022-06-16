@@ -1,0 +1,41 @@
+<div class="profile">
+    <mat-card class="profile__content">
+        <mat-card-header class="profile__header">
+            <mat-card-title class="profile__title">Profile information</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <form class="profile__form">
+                <mat-form-field class="profile__email-input" appearance="fill">
+                    <mat-label>Email</mat-label>
+                    <input type="email" matInput [formControl]="emailFormControl" placeholder="email">
+                    <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+                        Please enter a valid email address
+                    </mat-error>
+                    <mat-error *ngIf="emailFormControl.hasError('required')">
+                        Email is <strong>required</strong>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="profile__password-input" appearance="fill">
+                    <mat-label>Password</mat-label>
+                    <input [type]="hide ? 'password' : 'text'" matInput [formControl]="passwordFormControl" placeholder="password">
+                    <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    <mat-error *ngIf="passwordFormControl.hasError('minlength') && !passwordFormControl.hasError('required')">
+                        Please enter a password at least 5 characters long
+                    </mat-error>
+                    <mat-error *ngIf="passwordFormControl.hasError('pattern') && !passwordFormControl.hasError('minlength') && !passwordFormControl.hasError('required')">
+                        The password does not fit all the conditions
+                    </mat-error>
+                    <mat-error *ngIf="passwordFormControl.hasError('required')">
+                        Password is <strong>required</strong>
+                    </mat-error>
+                </mat-form-field>
+                <p>
+                    Remember that the password must contain at least one lowercase letter, one uppercase letter and one special character!
+                </p>
+            </form>
+        </mat-card-content>
+        <mat-card-actions class="profile__button-container">
+            <button class="profile__cansel-button" mat-raised-button color="accent" (click)="change()" [disabled]="!isValidEmail || !isValidPassword">Change</button>
+        </mat-card-actions>
+    </mat-card>
+</div>
