@@ -89,22 +89,26 @@ export class CategoryComponent implements OnInit, OnDestroy {
 
   changeCategory(): void {
     if(this.changeFormControl.valid && this.changeInputValue.trim() !== '') {
-      this.categoryService.changeCategory(this.oldChangeValue, this.changeInputValue.trim());
-      this.dataSource = new MatTableDataSource(this.categoryService.listOfCategories);
+      if(this.categoryService.changeCategory(this.oldChangeValue, this.changeInputValue.trim())) {
+        this.dataSource = new MatTableDataSource(this.categoryService.listOfCategories);
       
-      this.taskService.listOfTasks.forEach(item => {
-        if(item.category.length !== 0) {
-          for(let i = 0; i < item.category.length; i++) {
-            if(this.oldChangeValue === item.category[i])
-            item.category[i] = this.changeInputValue.trim()
+        this.taskService.listOfTasks.forEach(item => {
+          if(item.category.length !== 0) {
+            for(let i = 0; i < item.category.length; i++) {
+              if(this.oldChangeValue === item.category[i])
+              item.category[i] = this.changeInputValue.trim()
+            }
           }
-        }
-      })
+        })
 
-      this.isChange = false;
-      this.changeFormControl.disable();
-      this.oldChangeValue = '';
-      this.changeFormControl.setValue('');
+        this.isChange = false;
+        this.changeFormControl.disable();
+        this.oldChangeValue = '';
+        this.changeFormControl.setValue('');
+      }
+      else {
+        this.openDialog('There is already such a category!');
+      }
     }
   }
 

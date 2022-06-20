@@ -28,12 +28,20 @@ export class CategoryService {
   }
 
   changeCategory(oldCategory: string, newCategory: string): string | null {
-    for(let i = 0; i < this.listOfCategories.length; i++) {
-      if(this.listOfCategories[i] === oldCategory) {
-        this.listOfCategories[i] = newCategory;
+    let index: number | null = null;
+    for(let i: number = 0; i < this.listOfCategories.length; i++) {
+      if(this.listOfCategories[i] === newCategory) {
+        return null;
+      }
+      else if(this.listOfCategories[i] === oldCategory && this.listOfCategories[i] !== newCategory) {
+        index = i;
       }
     }
-    return oldCategory;
+    if(index !== null) {
+      this.listOfCategories[index] = newCategory;
+      return oldCategory;
+    }
+    return null;
   }
 
 }
