@@ -4,28 +4,28 @@
             <mat-card-title class="profile__title">Profile information</mat-card-title>
         </mat-card-header>
         <mat-card-content>
-            <form class="profile__form">
+            <form class="profile__form" [formGroup]="profileForm">
                 <mat-form-field class="profile__email-input" appearance="fill">
                     <mat-label>Email</mat-label>
-                    <input type="email" matInput [formControl]="emailFormControl" placeholder="email">
-                    <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+                    <input type="email" matInput formControlName="emailFormControl" placeholder="email">
+                    <mat-error *ngIf="profileForm.controls['emailFormControl'].hasError('email') && !profileForm.controls['emailFormControl'].hasError('required')">
                         Please enter a valid email address
                     </mat-error>
-                    <mat-error *ngIf="emailFormControl.hasError('required')">
+                    <mat-error *ngIf="profileForm.controls['emailFormControl'].hasError('required')">
                         Email is <strong>required</strong>
                     </mat-error>
                 </mat-form-field>
                 <mat-form-field class="profile__password-input" appearance="fill">
                     <mat-label>Password</mat-label>
-                    <input [type]="hide ? 'password' : 'text'" matInput [formControl]="passwordFormControl" placeholder="password">
-                    <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-                    <mat-error *ngIf="passwordFormControl.hasError('minlength') && !passwordFormControl.hasError('required')">
+                    <input [type]="hide ? 'password' : 'text'" matInput formControlName="passwordFormControl" placeholder="password">
+                    <mat-icon matSuffix (click)="changePasswordMode()">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    <mat-error *ngIf="profileForm.controls['passwordFormControl'].hasError('minlength') && !profileForm.controls['passwordFormControl'].hasError('required')">
                         Please enter a password at least 5 characters long
                     </mat-error>
-                    <mat-error *ngIf="passwordFormControl.hasError('pattern') && !passwordFormControl.hasError('minlength') && !passwordFormControl.hasError('required')">
+                    <mat-error *ngIf="profileForm.controls['passwordFormControl'].hasError('pattern') && !profileForm.controls['passwordFormControl'].hasError('minlength') && !profileForm.controls['passwordFormControl'].hasError('required')">
                         The password does not fit all the conditions
                     </mat-error>
-                    <mat-error *ngIf="passwordFormControl.hasError('required')">
+                    <mat-error *ngIf="profileForm.controls['passwordFormControl'].hasError('required')">
                         Password is <strong>required</strong>
                     </mat-error>
                 </mat-form-field>

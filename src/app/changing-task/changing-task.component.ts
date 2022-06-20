@@ -1,5 +1,5 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -14,23 +14,22 @@ import { Task } from '../interfaces/task';
   templateUrl: './changing-task.component.html',
   styleUrls: ['./changing-task.component.scss']
 })
-export class ChangingTaskComponent implements OnInit {
+export class ChangingTaskComponent implements OnInit, OnDestroy {
 
   constructor(
     public dialogRef: MatDialogRef<ChangingTaskComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Task,
     public taskService: TaskService,
-    public categoryService: CategoryService,
-    private fb: FormBuilder) {}
+    public categoryService: CategoryService) {}
 
-  changingTaskForm: FormGroup = this.fb.group({
-    idFormControl: [{value: this.data.id, disabled: true}, Validators.required],
-    nameFormControl: [this.data.name, Validators.compose([Validators.required, Validators.minLength(3)])],
-    startDateFormControl: [this.data.startDate],
-    endDateFormControl: [this.data.endDate],
-    priorityFormControl: [this.data.priority],
-    categoryFormControl: [this.data.category]
-  }, {validator: this.datesValidator('startDateFormControl', 'endDateFormControl')})
+  changingTaskForm: FormGroup = new FormGroup({
+    idFormControl: new FormControl({value: this.data.id, disabled: true}, Validators.required),
+    nameFormControl: new FormControl(this.data.name, Validators.compose([Validators.required, Validators.minLength(3)])),
+    startDateFormControl: new FormControl(this.data.startDate),
+    endDateFormControl: new FormControl(this.data.endDate),
+    priorityFormControl: new FormControl(this.data.priority),
+    categoryFormControl: new FormControl(this.data.category)
+  }, this.datesValidator('startDateFormControl', 'endDateFormControl'));
 
   idSub: Subscription;
   nameSub: Subscription;

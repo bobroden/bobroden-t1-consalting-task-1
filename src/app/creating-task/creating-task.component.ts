@@ -1,5 +1,5 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -20,17 +20,16 @@ export class CreatingTaskComponent implements OnInit, OnDestroy {
     public dialogRef: MatDialogRef<CreatingTaskComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Task,
     public taskService: TaskService,
-    public categoryService: CategoryService,
-    private fb: FormBuilder) { }
+    public categoryService: CategoryService) { }
 
-  newTaskForm = this.fb.group({
-    idFormControl: [{value: this.taskService.listOfTasks.length, disabled: true}, Validators.required],
-    nameFormControl: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
-    startDateFormControl: [''],
-    endDateFormControl: [''],
-    priorityFormControl: [''],
-    categoryFormControl: ['']
-  }, {validator: this.datesValidator('startDateFormControl', 'endDateFormControl')})
+  newTaskForm: FormGroup = new FormGroup({
+    idFormControl: new FormControl({value: this.taskService.listOfTasks.length, disabled: true}, Validators.required),
+    nameFormControl: new FormControl(null, Validators.compose([Validators.required, Validators.minLength(3)])),
+    startDateFormControl: new FormControl(null),
+    endDateFormControl: new FormControl(null),
+    priorityFormControl: new FormControl(null),
+    categoryFormControl: new FormControl(null)
+  }, this.datesValidator('startDateFormControl', 'endDateFormControl'));
 
   idSub: Subscription;
   nameSub: Subscription;
@@ -39,7 +38,7 @@ export class CreatingTaskComponent implements OnInit, OnDestroy {
   prioritySub: Subscription;
   categorySub: Subscription;
 
-  cancel(): void{
+  cancel(): void {
     this.dialogRef.close();
   }
 

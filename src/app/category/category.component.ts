@@ -1,6 +1,5 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
@@ -15,23 +14,19 @@ import { ErrorComponent } from '../error/error.component';
   templateUrl: './category.component.html',
   styleUrls: ['./category.component.scss']
 })
-export class CategoryComponent implements OnInit, OnDestroy {
+export class CategoryComponent implements OnInit {
 
   displayedColums: string[] = ['name', 'actions']
   dataSource: MatTableDataSource<string>;
 
   @ViewChild(MatTable) table: MatTable<Task>;
 
-  addFormControl: FormControl = new FormControl('', [Validators.required, Validators.minLength(3)]);
-  changeFormControl: FormControl = new FormControl({value: '', disabled: true}, [Validators.required, Validators.minLength(3)]);
-
-  addValueSub: Subscription;
-  changeValueSub: Subscription;
+  categoryForm: FormGroup = new FormGroup({
+    'addFormControl': new FormControl(null, [Validators.required, Validators.minLength(3)]),
+    'changeFormControl': new FormControl({value: null, disabled: true}, [Validators.required, Validators.minLength(3)])
+  })
 
   oldChangeValue: string = '';
-  
-  addInputValue: string = '';
-  changeInputValue: string = '';
 
   isChange: boolean = false;
 
@@ -40,13 +35,6 @@ export class CategoryComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.addValueSub = this.addFormControl.valueChanges.subscribe(value => this.addInputValue = value ? value : '');
-    this.changeValueSub = this.changeFormControl.valueChanges.subscribe(value => this.changeInputValue = value ? value : '');
-  }
-
-  ngOnDestroy(): void {
-    this.addValueSub.unsubscribe();
-    this.changeValueSub.unsubscribe();
   }
 
   openDialog(data: string): void {
@@ -56,9 +44,9 @@ export class CategoryComponent implements OnInit, OnDestroy {
   }
 
   addCategory(): void {
-    if(this.addFormControl.valid && this.addInputValue.trim() !== '') {
+    if(this.categoryForm.controls['addFormControl'].valid && this.categoryForm.controls['addFormControl'].value.trim() !== '') {
       const index = this.categoryService.listOfCategories.length;
-      this.categoryService.add(this.addInputValue.trim());
+      this.categoryService.add(this.categoryForm.controls['addFormControl'].value.trim());
       this.dataSource = new MatTableDataSource(this.categoryService.listOfCategories);
       if(index === this.categoryService.listOfCategories.length) {
         this.openDialog('There is already such a category!');
@@ -82,29 +70,29 @@ export class CategoryComponent implements OnInit, OnDestroy {
 
   changeMode(category: string): void {
     this.isChange = true;
-    this.changeFormControl.enable();
+    this.categoryForm.controls['changeFormControl'].enable();
     this.oldChangeValue = category;
-    this.changeFormControl.setValue(category);
+    this.categoryForm.controls['changeFormControl'].setValue(category);
   }
 
   changeCategory(): void {
-    if(this.changeFormControl.valid && this.changeInputValue.trim() !== '') {
-      if(this.categoryService.changeCategory(this.oldChangeValue, this.changeInputValue.trim())) {
+    if( this.categoryForm.controls['changeFormControl'].valid && this.categoryForm.controls['changeFormControl'].value.trim() !== '') {
+      if(this.categoryService.changeCategory(this.oldChangeValue, this.categoryForm.controls['changeFormControl'].value.trim())) {
         this.dataSource = new MatTableDataSource(this.categoryService.listOfCategories);
       
         this.taskService.listOfTasks.forEach(item => {
           if(item.category.length !== 0) {
             for(let i = 0; i < item.category.length; i++) {
               if(this.oldChangeValue === item.category[i])
-              item.category[i] = this.changeInputValue.trim()
+              item.category[i] = this.categoryForm.controls['changeFormControl'].value.trim()
             }
           }
         })
 
         this.isChange = false;
-        this.changeFormControl.disable();
+        this.categoryForm.controls['changeFormControl'].disable();
         this.oldChangeValue = '';
-        this.changeFormControl.setValue('');
+        this.categoryForm.controls['changeFormControl'].setValue('');
       }
       else {
         this.openDialog('There is already such a category!');

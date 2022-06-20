@@ -1,6 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { MatDialog } from '@angular/material/dialog';
@@ -18,50 +17,22 @@ import { MainUserInfo } from '../interfaces/main-user-info';
   templateUrl: './authorization.component.html',
   styleUrls: ['./authorization.component.scss']
 })
-export class AuthorizationComponent implements OnInit, OnDestroy {
+export class AuthorizationComponent implements OnInit {
 
-  emailFormControl: FormControl = new FormControl('', [Validators.required, Validators.email]);
-  passwordFormControl: FormControl = new FormControl('', [Validators.required, Validators.minLength(5), Validators.pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])/)]);
+  authorizationForm: FormGroup = new FormGroup({
+    emailFormControl: new FormControl(null, [Validators.required, Validators.email]),
+    passwordFormControl: new FormControl('', [Validators.required, Validators.minLength(5), Validators.pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])/)])
+  });
 
   isRegistration: boolean = false;
   hide: boolean = true;
 
-  emailInputValue: string = '';
-  passwordInputValue: string = '';
-
-  isValidEmail: boolean = false;
-  isValidPassword: boolean = false;
-
-  emailValueSub: Subscription;
-  passwordValueSub: Subscription;
-  emailStatusSub: Subscription;
-  passwodStatusSub: Subscription;
-
   constructor(private userService: UserService, private taskService: TaskService, private categoryService: CategoryService, public dialog: MatDialog, private router: Router) { }
 
   ngOnInit(): void {
-    this.emailValueSub = this.emailFormControl.valueChanges.subscribe(value => this.emailInputValue = value ? value : '');
-    this.passwordValueSub = this.passwordFormControl.valueChanges.subscribe(value => this.passwordInputValue = value ? value : '');
-    
-    this.emailStatusSub = this.emailFormControl.statusChanges.subscribe((status) => {
-      if(status === 'VALID')
-        this.isValidEmail = true;
-      else
-        this.isValidEmail = false;
-    });
-    this.passwodStatusSub = this.passwordFormControl.statusChanges.subscribe((status) => {
-      if(status === 'VALID')
-        this.isValidPassword = true;
-      else
-        this.isValidPassword = false;
-    })
   }
 
   ngOnDestroy(): void {
-    this.emailValueSub.unsubscribe();
-    this.passwordValueSub.unsubscribe();
-    this.emailStatusSub.unsubscribe();
-    this.passwodStatusSub.unsubscribe();
   }
 
   openDialog(data: string): void {
@@ -72,8 +43,8 @@ export class AuthorizationComponent implements OnInit, OnDestroy {
 
   signIn(): void {
     let user: MainUserInfo = {
-      login: this.emailInputValue,
-      password: this.passwordInputValue
+      login: this.authorizationForm.getRawValue().emailFormControl,
+      password: this.authorizationForm.getRawValue().passwordFormControl
     }
     if(this.userService.isUser(user)) {
       this.userService.isSigned = true;
@@ -88,8 +59,8 @@ export class AuthorizationComponent implements OnInit, OnDestroy {
 
   signUp(): void {
     let user: MainUserInfo = {
-      login: this.emailInputValue,
-      password: this.passwordInputValue
+      login: this.authorizationForm.getRawValue().emailFormControl,
+      password: this.authorizationForm.getRawValue().passwordFormControl
     }
     if(!this.userService.checkSameLogin(user)) {
       this.userService.addUser(user);
@@ -100,6 +71,10 @@ export class AuthorizationComponent implements OnInit, OnDestroy {
     else {
       this.openDialog('Sorry, but we already have such a user :(');
     }
+  }
+
+  changePasswordMode(): void {
+    this.hide = !this.hide;
   }
 
 }

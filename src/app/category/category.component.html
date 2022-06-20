@@ -1,34 +1,32 @@
 <div class="category-block">
-    <div class="category-block__container">
+    <form class="category-block__container" [formGroup]="categoryForm">
         <mat-form-field class="category-block__input-container">
             <mat-label class="category-block__label">Add a category</mat-label>
-            <input class="category-block__input" [formControl]="addFormControl" matInput placeholder="add">
-            <mat-error *ngIf="addFormControl.hasError('minlength') && !addFormControl.hasError('required')">
+            <input class="category-block__input" formControlName="addFormControl" matInput placeholder="add">
+            <mat-error *ngIf="categoryForm.controls['addFormControl'].hasError('minlength') && !categoryForm.controls['addFormControl'].hasError('required')">
                 Please enter a category at least 3 characters long
             </mat-error>
-            <mat-error *ngIf="addFormControl.hasError('required')">
+            <mat-error *ngIf="categoryForm.controls['addFormControl'].hasError('required')">
                 Category is <strong>required</strong>
             </mat-error>
         </mat-form-field>
         <button mat-raised-button (click)="addCategory()" color="primary" class="category-block__add-button">
             Add
         </button>
-    </div>
-    <div class="category-block__container">
         <mat-form-field class="category-block__input-container">
             <mat-label class="category-block__label">Change a category</mat-label>
-            <input class="category-block__input" [formControl]="changeFormControl" matInput placeholder="change">
-            <mat-error *ngIf="changeFormControl.hasError('minlength') && !changeFormControl.hasError('required')">
+            <input class="category-block__input" formControlName="changeFormControl" matInput placeholder="change">
+            <mat-error *ngIf="categoryForm.controls['changeFormControl'].hasError('minlength') && !categoryForm.controls['changeFormControl'].hasError('required')">
                 Please enter a category at least 3 characters long
             </mat-error>
-            <mat-error *ngIf="changeFormControl.hasError('required')">
+            <mat-error *ngIf="categoryForm.controls['changeFormControl'].hasError('required')">
                 Category is <strong>required</strong>
             </mat-error>
         </mat-form-field>
         <button [disabled]="!isChange" mat-raised-button (click)="changeCategory()" color="accent" class="category-block__change-button">
             Change
         </button>
-    </div>
+    </form>
     <table class="category-block__table mat-elevation-z8" mat-table [dataSource]="dataSource">
 
         <ng-container matColumnDef="name" class="category-block__name-column">
