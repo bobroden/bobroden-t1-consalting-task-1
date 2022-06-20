@@ -5,7 +5,7 @@ import { TaskService } from './task.service';
 import { LocalStorageService } from './local-storage.service';
 
 import { User } from '../interfaces/user';
-import { MainUserInfo } from '../interfaces/mainUserInfo';
+import { MainUserInfo } from '../interfaces/main-user-info';
 
 @Injectable({
   providedIn: 'root'

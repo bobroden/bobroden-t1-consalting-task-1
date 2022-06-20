@@ -11,7 +11,7 @@ import { CategoryService } from '../services/category.service';
 
 import { ErrorComponent } from '../error/error.component';
 
-import { MainUserInfo } from '../interfaces/mainUserInfo';
+import { MainUserInfo } from '../interfaces/main-user-info';
 
 @Component({
   selector: 'app-authorization',
