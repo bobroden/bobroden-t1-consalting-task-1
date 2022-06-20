@@ -38,9 +38,8 @@
                     <mat-select-trigger>
                       <mat-chip-list>
                         <mat-chip *ngFor="let category of data.category"
-                          [removable]="true" (removed)="onCatRemoved(category)" color="accent" selected>
+                          color="accent" selected>
                           {{ category }}
-                          <mat-icon matChipRemove>cancel</mat-icon>
                         </mat-chip>
                       </mat-chip-list>
                     </mat-select-trigger>

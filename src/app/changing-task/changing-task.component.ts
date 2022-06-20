@@ -65,25 +65,12 @@ export class ChangingTaskComponent implements OnInit {
     return (group: FormGroup) => {
       let start = group.controls[startDate];
       let end = group.controls[endDate];
-      if(new Date(start.value) > new Date(end.value)) {
+      if(new Date(start.value) > new Date(end.value) && start.value !== null && end.value !== null) {
         return {
           error: true
         };
       }
       return;
-    }
-  }
-
-  onCatRemoved(cat: string): void {
-    const categories = this.changingTaskForm.controls['categoryFormControl'].value as string[];
-    this.removeFirst(categories, cat);
-    this.changingTaskForm.controls['categoryFormControl'].setValue(categories);
-  }
-
-  private removeFirst<T>(array: T[], toRemove: T): void {
-    const index = array.indexOf(toRemove);
-    if (index !== -1) {
-      array.splice(index, 1);
     }
   }
 

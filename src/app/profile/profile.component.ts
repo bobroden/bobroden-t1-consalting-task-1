@@ -26,8 +26,8 @@ export class ProfileComponent implements OnInit {
   isRegistration: boolean = false;
   hide: boolean = true;
 
-  emailInputValue: string = '';
-  passwordInputValue: string = '';
+  emailInputValue: string = this.userService.currentUser.login;
+  passwordInputValue: string = this.userService.currentUser.password;
 
   isValidEmail: boolean = true;
   isValidPassword: boolean = true;

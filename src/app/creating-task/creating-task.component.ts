@@ -65,25 +65,12 @@ export class CreatingTaskComponent implements OnInit, OnDestroy {
     return (group: FormGroup) => {
       let start = group.controls[startDate];
       let end = group.controls[endDate];
-      if(new Date(start.value) > new Date(end.value)) {
+      if(new Date(start.value) > new Date(end.value) && start.value !== null && end.value !== null) {
         return {
           error: true
         };
       }
       return;
-    }
-  }
-
-  onCatRemoved(cat: string): void {
-    const categories = this.newTaskForm.controls['categoryFormControl'].value as string[];
-    this.removeFirst(categories, cat);
-    this.newTaskForm.controls['categoryFormControl'].setValue(categories); // To trigger change detection
-  }
-
-  private removeFirst<T>(array: T[], toRemove: T): void {
-    const index = array.indexOf(toRemove);
-    if (index !== -1) {
-      array.splice(index, 1);
     }
   }
 
