@@ -82,7 +82,7 @@ export class AuthorizationComponent implements OnInit, OnDestroy {
       this.router.navigateByUrl('/tasks');
     }
     else {
-      this.openDialog('Sorry, but no such user was found :(');
+      this.openDialog('Incorrect login or password! :(');
     }
   }
 

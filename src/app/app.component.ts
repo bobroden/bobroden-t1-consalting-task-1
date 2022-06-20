@@ -11,10 +11,7 @@ import { UserService } from './services/user.service';
 export class AppComponent {
   
   constructor(private router: Router, private userService: UserService) {
-    if(this.userService.isSigned) {
-      this.router.navigateByUrl('/tasks');
-    }
-    else {
+    if(!this.userService.isSigned) {
       this.router.navigateByUrl('/auth');
     }
   }
