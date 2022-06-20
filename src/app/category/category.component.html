@@ -31,15 +31,15 @@
     </div>
     <table class="category-block__table mat-elevation-z8" mat-table [dataSource]="dataSource">
 
-        <ng-container matColumnDef="name">
-            <th class="categoty-block__title" mat-header-cell *matHeaderCellDef> Name </th>
-            <td class="categoty-block__value" mat-cell *matCellDef="let category">{{category}}</td>
+        <ng-container matColumnDef="name" class="category-block__name-column">
+            <th class="category-block__title" mat-header-cell *matHeaderCellDef> Name </th>
+            <td class="category-block__value" mat-cell *matCellDef="let category">{{category}}</td>
         </ng-container>
 
-        <ng-container matColumnDef="actions">
-            <th class="categoty-block__title" mat-header-cell *matHeaderCellDef> Actions </th>
-            <td class="categoty-block__value" mat-cell *matCellDef="let category">
-                <mat-icon class="categoty-block__delete-button" (click)="deleteCategory(category)">delete</mat-icon>
+        <ng-container matColumnDef="actions" class="category-block__actions-column">
+            <th class="category-block__title" mat-header-cell *matHeaderCellDef> Actions </th>
+            <td class="category-block__value" mat-cell *matCellDef="let category">
+                <mat-icon class="category-block__delete-button" (click)="deleteCategory(category)">delete</mat-icon>
                 <mat-icon class="category-block__edit-button" (click)="changeMode(category)">edit</mat-icon>
             </td>
         </ng-container>
