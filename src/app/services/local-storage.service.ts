@@ -16,5 +16,19 @@ export class LocalStorageService {
   get(item: string): User[] {
     return JSON.parse(localStorage.getItem(item) || '[]');
   }
+
+  removeCurrentUser(): User {
+    let currnetUser = JSON.parse(localStorage.getItem('currentUser') || '');
+    localStorage.removeItem('currentUser');
+    return currnetUser;
+  }
+
+  setCurrentUser(currentUser: User): void {
+    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+  }
+
+  getCurrentUser(): User {
+    return JSON.parse(localStorage.getItem('currentUser') || '');
+  }
   
 }

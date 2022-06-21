@@ -10,9 +10,8 @@ export class TaskService {
 
   constructor() {}
 
-  add(task: Task): Task {
+  add(task: Task): void {
     this.listOfTasks.push(task);
-    return task;
   }
 
   delete(id: number): Task | null {

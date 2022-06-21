@@ -1,19 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { UserService } from '../services/user.service';
+import { LocalStorageService } from '../services/local-storage.service';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent {
 
-  constructor(public userService: UserService, private router: Router) { }
-
-  ngOnInit(): void {
-  }
+  constructor(public userService: UserService, private router: Router, private localStorageService: LocalStorageService) { }
 
   saveChanges(): void {
     this.userService.saveChanges();
@@ -21,7 +19,7 @@ export class HeaderComponent implements OnInit {
 
   signOut(): void {
     this.userService.isSigned = false;
-    localStorage.removeItem('currentUser');
+    this.localStorageService.removeCurrentUser();
     this.router.navigateByUrl('/auth');
   }
 

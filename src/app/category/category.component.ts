@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { MatTable, MatTableDataSource } from '@angular/material/table';
@@ -14,7 +14,7 @@ import { ErrorComponent } from '../error/error.component';
   templateUrl: './category.component.html',
   styleUrls: ['./category.component.scss']
 })
-export class CategoryComponent implements OnInit {
+export class CategoryComponent {
 
   displayedColums: string[] = ['name', 'actions']
   dataSource: MatTableDataSource<string>;
@@ -32,9 +32,6 @@ export class CategoryComponent implements OnInit {
 
   constructor(public categoryService: CategoryService, private taskService: TaskService, public dialog: MatDialog,) {
     this.dataSource = new MatTableDataSource(this.categoryService.listOfCategories);
-  }
-
-  ngOnInit(): void {
   }
 
   openDialog(data: string): void {

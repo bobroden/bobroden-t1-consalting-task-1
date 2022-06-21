@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -13,7 +13,7 @@ import { Task } from '../interfaces/task';
   templateUrl: './changing-task.component.html',
   styleUrls: ['./changing-task.component.scss']
 })
-export class ChangingTaskComponent implements OnInit {
+export class ChangingTaskComponent {
 
   constructor(
     public dialogRef: MatDialogRef<ChangingTaskComponent>,
@@ -29,9 +29,6 @@ export class ChangingTaskComponent implements OnInit {
     priorityFormControl: new FormControl(this.data.priority),
     categoryFormControl: new FormControl(this.data.category)
   }, this.datesValidator('startDateFormControl', 'endDateFormControl'));
-
-  ngOnInit(): void {
-  }
 
   cancel(): void {
     this.dialogRef.close();

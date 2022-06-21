@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -13,7 +13,7 @@ import { Task } from '../interfaces/task';
   templateUrl: './creating-task.component.html',
   styleUrls: ['./creating-task.component.scss']
 })
-export class CreatingTaskComponent implements OnInit {
+export class CreatingTaskComponent {
 
   constructor(
     public dialogRef: MatDialogRef<CreatingTaskComponent>,
@@ -30,16 +30,13 @@ export class CreatingTaskComponent implements OnInit {
     categoryFormControl: new FormControl(null)
   }, this.datesValidator('startDateFormControl', 'endDateFormControl'));
 
-  ngOnInit(): void {
-  }
-
   add(): void {
     this.data.id = this.newTaskForm.getRawValue().idFormControl;
     this.data.name = this.newTaskForm.getRawValue().nameFormControl;
     this.data.startDate = this.newTaskForm.getRawValue().startDateFormControl;
     this.data.endDate = this.newTaskForm.getRawValue().endDateFormControl;
     this.data.priority = this.newTaskForm.getRawValue().priorityFormControl;
-    this.data.category = this.newTaskForm.getRawValue().categoryFormControl
+    this.data.category = this.newTaskForm.getRawValue().categoryFormControl;
   }
 
   cancel(): void {

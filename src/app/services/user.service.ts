@@ -19,7 +19,7 @@ export class UserService {
   constructor(private localStorageService: LocalStorageService, private categoryService: CategoryService, private taskService: TaskService) {
     this.listOfUsers = this.localStorageService.get('users');
     if(localStorage.getItem('currentUser')) {
-      this.currentUser = JSON.parse(localStorage.getItem('currentUser') || '');
+      this.currentUser = this.localStorageService.getCurrentUser();
       this.categoryService.listOfCategories = this.currentUser.listOfCategories;
       this.taskService.listOfTasks = this.currentUser.listOfTasks;
       this.isSigned = true;
@@ -35,7 +35,7 @@ export class UserService {
       listOfCategories: []
     }
     this.currentUser = newUser;
-    localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
+    this.localStorageService.setCurrentUser(this.currentUser);
     this.listOfUsers.push(newUser);
     this.localStorageService.set('users', this.listOfUsers);
     this.isSigned = true;
@@ -46,7 +46,7 @@ export class UserService {
     for(let i = 0; i < this.listOfUsers.length; i++) {
       if(user.login === this.listOfUsers[i].login && user.password === this.listOfUsers[i].password) {
         this.currentUser = this.listOfUsers[i];
-        localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
+        this.localStorageService.setCurrentUser(this.currentUser);
         return true;
       }
     }
@@ -76,7 +76,7 @@ export class UserService {
         this.localStorageService.set('users', this.listOfUsers);
       }
     }
-    localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
+    this.localStorageService.setCurrentUser(this.currentUser);
   }
 
 }

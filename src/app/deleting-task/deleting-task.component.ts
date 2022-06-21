@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
@@ -11,7 +11,7 @@ import { Task } from '../interfaces/task';
   templateUrl: './deleting-task.component.html',
   styleUrls: ['./deleting-task.component.scss']
 })
-export class DeletingTaskComponent implements OnInit {
+export class DeletingTaskComponent {
 
   constructor(
     public dialogRef: MatDialogRef<DeletingTaskComponent>,
@@ -21,10 +21,6 @@ export class DeletingTaskComponent implements OnInit {
 
   cancel(): void {
     this.dialogRef.close();
-  }
-
-  ngOnInit(): void {
-
   }
 
 }

@@ -1,5 +1,5 @@
 import { Component, AfterViewInit, ViewChild, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 
 import { MatSort } from '@angular/material/sort';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
@@ -27,9 +27,7 @@ export class ListOfTasksComponent implements AfterViewInit, OnDestroy {
   @ViewChild(MatTable) table: MatTable<Task>;
   @ViewChild(MatSort) sort: MatSort;
 
-  dialogCreateSub: Subscription;
-  dialogChangeSub: Subscription;
-  dialogDeleteSub: Subscription;
+  destroy$: Subject<boolean> = new Subject<boolean>();
   
   constructor(public taskService: TaskService, public dialog: MatDialog) {
     this.dataSource = new MatTableDataSource(this.taskService.listOfTasks);
@@ -40,12 +38,8 @@ export class ListOfTasksComponent implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if(this.dialogCreateSub)
-      this.dialogCreateSub.unsubscribe();
-    if(this.dialogChangeSub)
-      this.dialogChangeSub.unsubscribe();
-    if(this.dialogDeleteSub)
-      this.dialogDeleteSub.unsubscribe();
+    this.destroy$.next(true);
+    this.destroy$.unsubscribe();
   }
 
   applyFilter(event: Event): void {
@@ -65,7 +59,7 @@ export class ListOfTasksComponent implements AfterViewInit, OnDestroy {
       }
     });
 
-    this.dialogCreateSub = dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().pipe(takeUntil(this.destroy$)).subscribe(result => {
       try {
         let newTask: Task = {
           id: +result.id,
@@ -104,7 +98,7 @@ export class ListOfTasksComponent implements AfterViewInit, OnDestroy {
       }
     });
 
-    this.dialogChangeSub = dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().pipe(takeUntil(this.destroy$)).subscribe(result => {
       try {
         let changingTask: Task = {
           id: +result.id,
@@ -139,7 +133,7 @@ export class ListOfTasksComponent implements AfterViewInit, OnDestroy {
       }
     });
 
-    this.dialogDeleteSub = dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().pipe(takeUntil(this.destroy$)).subscribe(result => {
       try {
         let deletingId = +result.id;
         this.taskService.delete(deletingId);

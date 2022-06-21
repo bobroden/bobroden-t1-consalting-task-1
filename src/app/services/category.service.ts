@@ -9,11 +9,10 @@ export class CategoryService {
 
   constructor() { }
 
-  add(category: string): string | void {
+  add(category: string): void {
     const index = this.listOfCategories.findIndex(item => item === category);
     if(index === -1) {
       this.listOfCategories.push(category);
-      return category;
     }
   }
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -17,7 +17,7 @@ import { MainUserInfo } from '../interfaces/main-user-info';
   templateUrl: './authorization.component.html',
   styleUrls: ['./authorization.component.scss']
 })
-export class AuthorizationComponent implements OnInit {
+export class AuthorizationComponent {
 
   authorizationForm: FormGroup = new FormGroup({
     emailFormControl: new FormControl(null, [Validators.required, Validators.email]),
@@ -28,12 +28,6 @@ export class AuthorizationComponent implements OnInit {
   hide: boolean = true;
 
   constructor(private userService: UserService, private taskService: TaskService, private categoryService: CategoryService, public dialog: MatDialog, private router: Router) { }
-
-  ngOnInit(): void {
-  }
-
-  ngOnDestroy(): void {
-  }
 
   openDialog(data: string): void {
     this.dialog.open(ErrorComponent, {
