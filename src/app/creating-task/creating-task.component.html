@@ -55,6 +55,6 @@
     </div>
     <div mat-dialog-actions class="creating-task__button-container">
         <button mat-button (click)="cancel()" class="creating-task__cancel-button">Cancel</button>
-        <button mat-button [mat-dialog-close]="data" [disabled]="!newTaskForm.valid" class="creating-task__add-button">Add</button>
+        <button mat-button (click)="add()" [mat-dialog-close]="data" [disabled]="!newTaskForm.valid" class="creating-task__add-button">Add</button>
     </div>
 </div>

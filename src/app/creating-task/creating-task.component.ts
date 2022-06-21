@@ -1,6 +1,5 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
-import { Subscription } from 'rxjs';
 
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
@@ -14,7 +13,7 @@ import { Task } from '../interfaces/task';
   templateUrl: './creating-task.component.html',
   styleUrls: ['./creating-task.component.scss']
 })
-export class CreatingTaskComponent implements OnInit, OnDestroy {
+export class CreatingTaskComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<CreatingTaskComponent>,
@@ -31,33 +30,20 @@ export class CreatingTaskComponent implements OnInit, OnDestroy {
     categoryFormControl: new FormControl(null)
   }, this.datesValidator('startDateFormControl', 'endDateFormControl'));
 
-  idSub: Subscription;
-  nameSub: Subscription;
-  startDateSub: Subscription;
-  endDateSub: Subscription;
-  prioritySub: Subscription;
-  categorySub: Subscription;
+  ngOnInit(): void {
+  }
+
+  add(): void {
+    this.data.id = this.newTaskForm.getRawValue().idFormControl;
+    this.data.name = this.newTaskForm.getRawValue().nameFormControl;
+    this.data.startDate = this.newTaskForm.getRawValue().startDateFormControl;
+    this.data.endDate = this.newTaskForm.getRawValue().endDateFormControl;
+    this.data.priority = this.newTaskForm.getRawValue().priorityFormControl;
+    this.data.category = this.newTaskForm.getRawValue().categoryFormControl
+  }
 
   cancel(): void {
     this.dialogRef.close();
-  }
-
-  ngOnInit(): void {
-    this.idSub = this.newTaskForm.controls['idFormControl'].valueChanges.subscribe(value => this.data.id = value);
-    this.nameSub = this.newTaskForm.controls['nameFormControl'].valueChanges.subscribe(value => this.data.name = value);
-    this.startDateSub = this.newTaskForm.controls['startDateFormControl'].valueChanges.subscribe(value => this.data.startDate = value);
-    this.endDateSub = this.newTaskForm.controls['endDateFormControl'].valueChanges.subscribe(value => this.data.endDate = value);
-    this.prioritySub = this.newTaskForm.controls['priorityFormControl'].valueChanges.subscribe(value => this.data.priority = value);
-    this.categorySub = this.newTaskForm.controls['categoryFormControl'].valueChanges.subscribe(value => this.data.category = value);
-  }
-
-  ngOnDestroy(): void {
-    this.idSub.unsubscribe();
-    this.nameSub.unsubscribe();
-    this.startDateSub.unsubscribe();
-    this.endDateSub.unsubscribe();
-    this.prioritySub.unsubscribe();
-    this.categorySub.unsubscribe();
   }
 
   datesValidator(startDate: string, endDate: string): object {

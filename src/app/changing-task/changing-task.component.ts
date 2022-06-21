@@ -1,6 +1,5 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
-import { Subscription } from 'rxjs';
 
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
@@ -14,7 +13,7 @@ import { Task } from '../interfaces/task';
   templateUrl: './changing-task.component.html',
   styleUrls: ['./changing-task.component.scss']
 })
-export class ChangingTaskComponent implements OnInit, OnDestroy {
+export class ChangingTaskComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<ChangingTaskComponent>,
@@ -31,33 +30,20 @@ export class ChangingTaskComponent implements OnInit, OnDestroy {
     categoryFormControl: new FormControl(this.data.category)
   }, this.datesValidator('startDateFormControl', 'endDateFormControl'));
 
-  idSub: Subscription;
-  nameSub: Subscription;
-  startDateSub: Subscription;
-  endDateSub: Subscription;
-  prioritySub: Subscription;
-  categorySub: Subscription;
+  ngOnInit(): void {
+  }
 
   cancel(): void {
     this.dialogRef.close();
   }
 
-  ngOnInit(): void {
-    this.idSub = this.changingTaskForm.controls['idFormControl'].valueChanges.subscribe(value => this.data.id = value);
-    this.nameSub = this.changingTaskForm.controls['nameFormControl'].valueChanges.subscribe(value => this.data.name = value);
-    this.startDateSub = this.changingTaskForm.controls['startDateFormControl'].valueChanges.subscribe(value => this.data.startDate = value);
-    this.endDateSub = this.changingTaskForm.controls['endDateFormControl'].valueChanges.subscribe(value => this.data.endDate = value);
-    this.prioritySub = this.changingTaskForm.controls['priorityFormControl'].valueChanges.subscribe(value => this.data.priority = value);
-    this.categorySub = this.changingTaskForm.controls['categoryFormControl'].valueChanges.subscribe(value => this.data.category = value);
-  }
-
-  ngOnDestroy(): void {
-    this.idSub.unsubscribe();
-    this.nameSub.unsubscribe();
-    this.startDateSub.unsubscribe();
-    this.endDateSub.unsubscribe();
-    this.prioritySub.unsubscribe();
-    this.categorySub.unsubscribe();
+  change(): void {
+    this.data.id = this.changingTaskForm.getRawValue().idFormControl;
+    this.data.name = this.changingTaskForm.getRawValue().nameFormControl;
+    this.data.startDate = this.changingTaskForm.getRawValue().startDateFormControl;
+    this.data.endDate = this.changingTaskForm.getRawValue().endDateFormControl;
+    this.data.priority = this.changingTaskForm.getRawValue().priorityFormControl;
+    this.data.category = this.changingTaskForm.getRawValue().categoryFormControl;
   }
 
   datesValidator(startDate: string, endDate: string): object {
