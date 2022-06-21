@@ -58,7 +58,7 @@
 
             <tr mat-header-row *matHeaderRowDef="displayedColums"></tr>
             <tr mat-row *matRowDef="let task; columns: displayedColums;"></tr>
-            <div *ngIf="taskService.listOfTasks.length !== 0">
+            <div *ngIf="taskService.getListOfTasks().length !== 0">
                 <tr class="mat-row" *matNoDataRow>
                     <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
                 </tr>

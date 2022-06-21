@@ -31,7 +31,7 @@ export class CategoryComponent {
   isChange: boolean = false;
 
   constructor(public categoryService: CategoryService, private taskService: TaskService, public dialog: MatDialog,) {
-    this.dataSource = new MatTableDataSource(this.categoryService.listOfCategories);
+    this.dataSource = new MatTableDataSource(this.categoryService.getListOfCategories());
   }
 
   openDialog(data: string): void {
@@ -42,10 +42,10 @@ export class CategoryComponent {
 
   addCategory(): void {
     if(this.categoryForm.controls['addFormControl'].valid && this.categoryForm.controls['addFormControl'].value.trim() !== '') {
-      const index = this.categoryService.listOfCategories.length;
+      const index = this.categoryService.getListOfCategories().length;
       this.categoryService.add(this.categoryForm.controls['addFormControl'].value.trim());
-      this.dataSource = new MatTableDataSource(this.categoryService.listOfCategories);
-      if(index === this.categoryService.listOfCategories.length) {
+      this.dataSource = new MatTableDataSource(this.categoryService.getListOfCategories());
+      if(index === this.categoryService.getListOfCategories().length) {
         this.openDialog('There is already such a category!');
       }
     }
@@ -53,9 +53,9 @@ export class CategoryComponent {
 
   deleteCategory(category: string): void {
     this.categoryService.delete(category);
-    this.dataSource = new MatTableDataSource(this.categoryService.listOfCategories);
+    this.dataSource = new MatTableDataSource(this.categoryService.getListOfCategories());
 
-    this.taskService.listOfTasks.forEach(item => {
+    this.taskService.getListOfTasks().forEach(item => {
       if(item.category.length !== 0) {
         for(let i = 0; i < item.category.length; i++) {
           if(category === item.category[i])
@@ -75,9 +75,9 @@ export class CategoryComponent {
   changeCategory(): void {
     if( this.categoryForm.controls['changeFormControl'].valid && this.categoryForm.controls['changeFormControl'].value.trim() !== '') {
       if(this.categoryService.changeCategory(this.oldChangeValue, this.categoryForm.controls['changeFormControl'].value.trim())) {
-        this.dataSource = new MatTableDataSource(this.categoryService.listOfCategories);
+        this.dataSource = new MatTableDataSource(this.categoryService.getListOfCategories());
       
-        this.taskService.listOfTasks.forEach(item => {
+        this.taskService.getListOfTasks().forEach(item => {
           if(item.category.length !== 0) {
             for(let i = 0; i < item.category.length; i++) {
               if(this.oldChangeValue === item.category[i])

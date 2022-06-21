@@ -5,9 +5,17 @@ import { Injectable } from '@angular/core';
 })
 export class CategoryService {
 
-  listOfCategories: string[] = [];
+  private listOfCategories: string[] = [];
 
   constructor() { }
+
+  setListOfCategories(list: string[]): void {
+    this.listOfCategories = list;
+  }
+
+  getListOfCategories(): string[] {
+    return this.listOfCategories;
+  }
 
   add(category: string): void {
     const index = this.listOfCategories.findIndex(item => item === category);

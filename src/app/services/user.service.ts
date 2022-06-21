@@ -12,18 +12,43 @@ import { MainUserInfo } from '../interfaces/main-user-info';
 })
 export class UserService {
 
-  listOfUsers: User[] = [];
+  private listOfUsers: User[] = [];
+  private currentUser: User;
+
   isSigned: boolean = false;
-  currentUser: User;
 
   constructor(private localStorageService: LocalStorageService, private categoryService: CategoryService, private taskService: TaskService) {
     this.listOfUsers = this.localStorageService.get('users');
     if(localStorage.getItem('currentUser')) {
       this.currentUser = this.localStorageService.getCurrentUser();
-      this.categoryService.listOfCategories = this.currentUser.listOfCategories;
-      this.taskService.listOfTasks = this.currentUser.listOfTasks;
+      this.categoryService.setListOfCategories(this.currentUser.listOfCategories);
+      this.taskService.setListOfTasks(this.currentUser.listOfTasks);
       this.isSigned = true;
     }
+  }
+
+  setListOfUsers(list: User[]): void {
+    this.listOfUsers = list;
+  }
+
+  getListOfUsers(): User[] {
+    return this.listOfUsers;
+  }
+
+  setIsSigned(value: boolean): void {
+    this.isSigned = value;
+  }
+
+  getIsSigned(): boolean {
+    return this.isSigned;
+  }
+
+  setCurrentUser(user: User): void {
+    this.currentUser = user;
+  }
+
+  getCurrentUser(): User {
+    return this.currentUser;
   }
 
   addUser(user: MainUserInfo): boolean {
@@ -70,8 +95,8 @@ export class UserService {
   saveChanges(): void {
     for(let i = 0; i < this.listOfUsers.length; i++) {
       if(this.currentUser.id === this.listOfUsers[i].id) {
-        this.currentUser.listOfCategories = this.categoryService.listOfCategories;
-        this.currentUser.listOfTasks = this.taskService.listOfTasks;
+        this.currentUser.listOfCategories = this.categoryService.getListOfCategories();
+        this.currentUser.listOfTasks = this.taskService.getListOfTasks();
         this.listOfUsers.splice(i, 1, this.currentUser);
         this.localStorageService.set('users', this.listOfUsers);
       }

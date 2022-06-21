@@ -30,7 +30,7 @@ export class ListOfTasksComponent implements AfterViewInit, OnDestroy {
   destroy$: Subject<boolean> = new Subject<boolean>();
   
   constructor(public taskService: TaskService, public dialog: MatDialog) {
-    this.dataSource = new MatTableDataSource(this.taskService.listOfTasks);
+    this.dataSource = new MatTableDataSource(this.taskService.getListOfTasks());
   }
 
   ngAfterViewInit(): void {
@@ -50,7 +50,7 @@ export class ListOfTasksComponent implements AfterViewInit, OnDestroy {
   openCreatingDialog(): void {
     const dialogRef = this.dialog.open(CreatingTaskComponent, {
       data: {
-        id: this.taskService.listOfTasks.length,
+        id: this.taskService.getListOfTasks.length,
         name: '',
         startDate: null,
         endDate: null,
@@ -79,7 +79,7 @@ export class ListOfTasksComponent implements AfterViewInit, OnDestroy {
           newTask.category = result.category
         }
         this.taskService.add(newTask);
-        this.dataSource = new MatTableDataSource(this.taskService.listOfTasks);
+        this.dataSource = new MatTableDataSource(this.taskService.getListOfTasks());
         this.dataSource.sort = this.sort;
       }
       catch {}
@@ -118,7 +118,7 @@ export class ListOfTasksComponent implements AfterViewInit, OnDestroy {
           changingTask.category = result.category
         }
         this.taskService.changeTask(changingTask);
-        this.dataSource = new MatTableDataSource(this.taskService.listOfTasks);
+        this.dataSource = new MatTableDataSource(this.taskService.getListOfTasks());
         this.dataSource.sort = this.sort;
       }
       catch {}
@@ -137,7 +137,7 @@ export class ListOfTasksComponent implements AfterViewInit, OnDestroy {
       try {
         let deletingId = +result.id;
         this.taskService.delete(deletingId);
-        this.dataSource = new MatTableDataSource(this.taskService.listOfTasks);
+        this.dataSource = new MatTableDataSource(this.taskService.getListOfTasks());
         this.dataSource.sort = this.sort;
       }
       catch {}

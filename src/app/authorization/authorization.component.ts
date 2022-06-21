@@ -41,9 +41,9 @@ export class AuthorizationComponent {
       password: this.authorizationForm.getRawValue().passwordFormControl
     }
     if(this.userService.isUser(user)) {
-      this.userService.isSigned = true;
-      this.taskService.listOfTasks = this.userService.currentUser.listOfTasks;
-      this.categoryService.listOfCategories = this.userService.currentUser.listOfCategories;
+      this.userService.setIsSigned(true);
+      this.taskService.setListOfTasks(this.userService.getCurrentUser().listOfTasks);
+      this.categoryService.setListOfCategories(this.userService.getCurrentUser().listOfCategories);
       this.router.navigateByUrl('/tasks');
     }
     else {
@@ -58,8 +58,8 @@ export class AuthorizationComponent {
     }
     if(!this.userService.checkSameLogin(user)) {
       this.userService.addUser(user);
-      this.categoryService.listOfCategories = [];
-      this.taskService.listOfTasks = [];
+      this.categoryService.setListOfCategories([]);
+      this.taskService.setListOfTasks([]);
       this.router.navigateByUrl('/tasks');
     }
     else {

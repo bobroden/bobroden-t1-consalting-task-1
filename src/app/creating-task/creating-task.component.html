@@ -43,7 +43,7 @@
                         </mat-chip>
                       </mat-chip-list>
                     </mat-select-trigger>
-                    <mat-option *ngFor="let category of categoryService.listOfCategories" [value]="category">
+                    <mat-option *ngFor="let category of categoryService.getListOfCategories()" [value]="category">
                       {{ category }}
                     </mat-option>
                   </mat-select>

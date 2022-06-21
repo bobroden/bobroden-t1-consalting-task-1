@@ -18,7 +18,7 @@ export class HeaderComponent {
   }
 
   signOut(): void {
-    this.userService.isSigned = false;
+    this.userService.setIsSigned(false);
     this.localStorageService.removeCurrentUser();
     this.router.navigateByUrl('/auth');
   }

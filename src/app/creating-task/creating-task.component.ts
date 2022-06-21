@@ -22,7 +22,7 @@ export class CreatingTaskComponent {
     public categoryService: CategoryService) { }
 
   newTaskForm: FormGroup = new FormGroup({
-    idFormControl: new FormControl({value: this.taskService.listOfTasks.length, disabled: true}, Validators.required),
+    idFormControl: new FormControl({value: this.taskService.getListOfTasks.length, disabled: true}, Validators.required),
     nameFormControl: new FormControl(null, Validators.compose([Validators.required, Validators.minLength(3)])),
     startDateFormControl: new FormControl(null),
     endDateFormControl: new FormControl(null),

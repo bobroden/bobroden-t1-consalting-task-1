@@ -6,9 +6,17 @@ import { Task } from '../interfaces/task';
 })
 export class TaskService {
 
-  listOfTasks: Task[] = [];
+  private listOfTasks: Task[] = [];
 
   constructor() {}
+
+  setListOfTasks(list: Task[]): void {
+    this.listOfTasks = list;
+  }
+
+  getListOfTasks(): Task[] {
+    return this.listOfTasks;
+  }
 
   add(task: Task): void {
     this.listOfTasks.push(task);

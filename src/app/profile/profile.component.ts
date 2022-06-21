@@ -18,8 +18,8 @@ import { MainUserInfo } from '../interfaces/main-user-info';
 export class ProfileComponent {
 
   profileForm: FormGroup = new FormGroup({
-    emailFormControl: new FormControl(this.userService.currentUser.login, [Validators.required, Validators.email]),
-    passwordFormControl: new FormControl(this.userService.currentUser.password, [Validators.required, Validators.minLength(5), Validators.pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])/)])
+    emailFormControl: new FormControl(this.userService.getCurrentUser().login, [Validators.required, Validators.email]),
+    passwordFormControl: new FormControl(this.userService.getCurrentUser().password, [Validators.required, Validators.minLength(5), Validators.pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])/)])
   })
 
   hide: boolean = true;
