@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, ViewChild, OnDestroy } from '@angular/core';
+import { Component, AfterViewInit, ViewChild, OnDestroy, OnInit } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 
 import { MatSort } from '@angular/material/sort';
@@ -19,7 +19,7 @@ import { Task } from '../interfaces/task';
   templateUrl: './list-of-tasks.component.html',
   styleUrls: ['./list-of-tasks.component.scss']
 })
-export class ListOfTasksComponent implements AfterViewInit, OnDestroy {
+export class ListOfTasksComponent implements AfterViewInit, OnDestroy, OnInit {
 
   displayedColums: string[] = ['id', 'name', 'startDate', 'endDate', 'priority', 'category', 'actions']
   dataSource: MatTableDataSource<Task>;
@@ -28,13 +28,21 @@ export class ListOfTasksComponent implements AfterViewInit, OnDestroy {
   @ViewChild(MatSort) sort: MatSort;
 
   destroy$: Subject<boolean> = new Subject<boolean>();
+
+  listOfTasks: Task[] = [];
   
-  constructor(public taskService: TaskService, public dialog: MatDialog) {
-    this.dataSource = new MatTableDataSource(this.taskService.getListOfTasks());
+  constructor(public taskService: TaskService, public dialog: MatDialog) {}
+
+  ngOnInit(): void {
+    this.taskService.listOfTasks$.pipe(takeUntil(this.destroy$)).subscribe(list => {
+      this.listOfTasks = list;
+      this.dataSource = new MatTableDataSource(this.listOfTasks);
+      this.dataSource.sort = this.sort;
+    });
   }
 
   ngAfterViewInit(): void {
-    this.dataSource.sort = this.sort;
+    //this.dataSource.sort = this.sort;
   }
 
   ngOnDestroy(): void {
@@ -50,7 +58,7 @@ export class ListOfTasksComponent implements AfterViewInit, OnDestroy {
   openCreatingDialog(): void {
     const dialogRef = this.dialog.open(CreatingTaskComponent, {
       data: {
-        id: this.taskService.getListOfTasks.length,
+        id: this.listOfTasks.length,
         name: '',
         startDate: null,
         endDate: null,
@@ -78,9 +86,7 @@ export class ListOfTasksComponent implements AfterViewInit, OnDestroy {
         if(result.category !== null){
           newTask.category = result.category
         }
-        this.taskService.add(newTask);
-        this.dataSource = new MatTableDataSource(this.taskService.getListOfTasks());
-        this.dataSource.sort = this.sort;
+        this.taskService.add(newTask, this.listOfTasks);
       }
       catch {}
     })
@@ -117,9 +123,7 @@ export class ListOfTasksComponent implements AfterViewInit, OnDestroy {
         if(result.category !== null){
           changingTask.category = result.category
         }
-        this.taskService.changeTask(changingTask);
-        this.dataSource = new MatTableDataSource(this.taskService.getListOfTasks());
-        this.dataSource.sort = this.sort;
+        this.taskService.changeTask(changingTask, this.listOfTasks);
       }
       catch {}
     })
@@ -136,9 +140,7 @@ export class ListOfTasksComponent implements AfterViewInit, OnDestroy {
     dialogRef.afterClosed().pipe(takeUntil(this.destroy$)).subscribe(result => {
       try {
         let deletingId = +result.id;
-        this.taskService.delete(deletingId);
-        this.dataSource = new MatTableDataSource(this.taskService.getListOfTasks());
-        this.dataSource.sort = this.sort;
+        this.taskService.delete(deletingId, this.listOfTasks);
       }
       catch {}
     })

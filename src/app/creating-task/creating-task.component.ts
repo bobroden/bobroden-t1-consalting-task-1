@@ -1,5 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
+import { Subject, takeUntil } from 'rxjs';
 
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
@@ -15,14 +16,29 @@ import { Task } from '../interfaces/task';
 })
 export class CreatingTaskComponent {
 
+  listOfCategories: string[] = [];
+
+  destroy$: Subject<boolean> = new Subject<boolean>();
+
   constructor(
     public dialogRef: MatDialogRef<CreatingTaskComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Task,
     public taskService: TaskService,
     public categoryService: CategoryService) { }
 
-  newTaskForm: FormGroup = new FormGroup({
-    idFormControl: new FormControl({value: this.taskService.getListOfTasks.length, disabled: true}, Validators.required),
+  ngOnInit(): void {
+    this.categoryService.listOfCategories$.pipe(takeUntil(this.destroy$)).subscribe(list => {
+      this.listOfCategories = list;
+    })
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next(true);
+    this.destroy$.unsubscribe();
+  }
+  
+    newTaskForm: FormGroup = new FormGroup({
+    idFormControl: new FormControl({value: +this.data.id, disabled: true}, Validators.required),
     nameFormControl: new FormControl(null, Validators.compose([Validators.required, Validators.minLength(3)])),
     startDateFormControl: new FormControl(null),
     endDateFormControl: new FormControl(null),

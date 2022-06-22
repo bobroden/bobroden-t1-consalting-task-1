@@ -1,5 +1,6 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
+import { Subject, takeUntil } from 'rxjs';
 
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
@@ -13,13 +14,28 @@ import { Task } from '../interfaces/task';
   templateUrl: './changing-task.component.html',
   styleUrls: ['./changing-task.component.scss']
 })
-export class ChangingTaskComponent {
+export class ChangingTaskComponent implements OnInit, OnDestroy {
+
+  listOfCategories: string[] = [];
+
+  destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(
     public dialogRef: MatDialogRef<ChangingTaskComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Task,
     public taskService: TaskService,
     public categoryService: CategoryService) {}
+    
+  ngOnInit(): void {
+    this.categoryService.listOfCategories$.pipe(takeUntil(this.destroy$)).subscribe(list => {
+      this.listOfCategories = list;
+    })
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next(true);
+    this.destroy$.unsubscribe();
+  }
 
   changingTaskForm: FormGroup = new FormGroup({
     idFormControl: new FormControl({value: this.data.id, disabled: true}, Validators.required),

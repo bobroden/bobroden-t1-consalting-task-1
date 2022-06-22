@@ -1,51 +1,51 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CategoryService {
 
-  private listOfCategories: string[] = [];
+  listOfCategories$ = new BehaviorSubject<string[]>([]);
 
   constructor() { }
 
   setListOfCategories(list: string[]): void {
-    this.listOfCategories = list;
+    this.listOfCategories$.next(list);
   }
 
-  getListOfCategories(): string[] {
-    return this.listOfCategories;
-  }
-
-  add(category: string): void {
-    const index = this.listOfCategories.findIndex(item => item === category);
+  add(category: string, listOfCategories: string[]): void {
+    const index = listOfCategories.findIndex(item => item === category);
     if(index === -1) {
-      this.listOfCategories.push(category);
+      listOfCategories.push(category);
+      this.listOfCategories$.next(listOfCategories);
     }
   }
 
-  delete(category: string): string | null {
-    const index = this.listOfCategories.findIndex(item => item === category);
+  delete(category: string, listOfCategories: string[]): string | null {
+    const index = listOfCategories.findIndex(item => item === category);
     let oldCategory = null;
     if(index !== -1) {
-      oldCategory = this.listOfCategories[index];
-      this.listOfCategories.splice(index, 1);
+      oldCategory = listOfCategories[index];
+      listOfCategories.splice(index, 1);
+      this.listOfCategories$.next(listOfCategories);
     }
     return oldCategory;
   }
 
-  changeCategory(oldCategory: string, newCategory: string): string | null {
+  changeCategory(oldCategory: string, newCategory: string, listOfCategories: string[]): string | null {
     let index: number | null = null;
-    for(let i: number = 0; i < this.listOfCategories.length; i++) {
-      if(this.listOfCategories[i] === newCategory) {
+    for(let i: number = 0; i < listOfCategories.length; i++) {
+      if(listOfCategories[i] === newCategory) {
         return null;
       }
-      else if(this.listOfCategories[i] === oldCategory && this.listOfCategories[i] !== newCategory) {
+      else if(listOfCategories[i] === oldCategory && listOfCategories[i] !== newCategory) {
         index = i;
       }
     }
     if(index !== null) {
-      this.listOfCategories[index] = newCategory;
+      listOfCategories[index] = newCategory;
+      this.listOfCategories$.next(listOfCategories);
       return oldCategory;
     }
     return null;

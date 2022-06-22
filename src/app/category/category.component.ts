@@ -1,11 +1,14 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Subject, takeUntil } from 'rxjs';
 
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 
 import { CategoryService } from '../services/category.service';
 import { TaskService } from '../services/task.service';
+
+import { Task } from '../interfaces/task';
 
 import { ErrorComponent } from '../error/error.component';
 
@@ -14,7 +17,7 @@ import { ErrorComponent } from '../error/error.component';
   templateUrl: './category.component.html',
   styleUrls: ['./category.component.scss']
 })
-export class CategoryComponent {
+export class CategoryComponent implements OnInit, OnDestroy {
 
   displayedColums: string[] = ['name', 'actions']
   dataSource: MatTableDataSource<string>;
@@ -30,8 +33,26 @@ export class CategoryComponent {
 
   isChange: boolean = false;
 
-  constructor(public categoryService: CategoryService, private taskService: TaskService, public dialog: MatDialog,) {
-    this.dataSource = new MatTableDataSource(this.categoryService.getListOfCategories());
+  listOfTasks: Task[] = [];
+  listOfCategories: string[] = [];
+
+  destroy$: Subject<boolean> = new Subject<boolean>();
+
+  constructor(public categoryService: CategoryService, private taskService: TaskService, public dialog: MatDialog) {}
+
+  ngOnInit(): void {
+    this.taskService.listOfTasks$.pipe(takeUntil(this.destroy$)).subscribe(list => {
+      this.listOfTasks = list;
+    });
+    this.categoryService.listOfCategories$.pipe(takeUntil(this.destroy$)).subscribe(list => {
+      this.listOfCategories = list;
+      this.dataSource = new MatTableDataSource(this.listOfCategories);
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next(true);
+    this.destroy$.unsubscribe();
   }
 
   openDialog(data: string): void {
@@ -42,20 +63,18 @@ export class CategoryComponent {
 
   addCategory(): void {
     if(this.categoryForm.controls['addFormControl'].valid && this.categoryForm.controls['addFormControl'].value.trim() !== '') {
-      const index = this.categoryService.getListOfCategories().length;
-      this.categoryService.add(this.categoryForm.controls['addFormControl'].value.trim());
-      this.dataSource = new MatTableDataSource(this.categoryService.getListOfCategories());
-      if(index === this.categoryService.getListOfCategories().length) {
+      const index = this.listOfCategories.length;
+      this.categoryService.add(this.categoryForm.controls['addFormControl'].value.trim(), this.listOfCategories);
+      if(index === this.listOfCategories.length) {
         this.openDialog('There is already such a category!');
       }
     }
   }
 
   deleteCategory(category: string): void {
-    this.categoryService.delete(category);
-    this.dataSource = new MatTableDataSource(this.categoryService.getListOfCategories());
+    this.categoryService.delete(category, this.listOfCategories);
 
-    this.taskService.getListOfTasks().forEach(item => {
+    this.listOfTasks.forEach(item => {
       if(item.category.length !== 0) {
         for(let i = 0; i < item.category.length; i++) {
           if(category === item.category[i])
@@ -74,10 +93,9 @@ export class CategoryComponent {
 
   changeCategory(): void {
     if( this.categoryForm.controls['changeFormControl'].valid && this.categoryForm.controls['changeFormControl'].value.trim() !== '') {
-      if(this.categoryService.changeCategory(this.oldChangeValue, this.categoryForm.controls['changeFormControl'].value.trim())) {
-        this.dataSource = new MatTableDataSource(this.categoryService.getListOfCategories());
+      if(this.categoryService.changeCategory(this.oldChangeValue, this.categoryForm.controls['changeFormControl'].value.trim(), this.listOfCategories)) {
       
-        this.taskService.getListOfTasks().forEach(item => {
+        this.listOfTasks.forEach(item => {
           if(item.category.length !== 0) {
             for(let i = 0; i < item.category.length; i++) {
               if(this.oldChangeValue === item.category[i])

@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+
 import { Task } from '../interfaces/task';
 
 @Injectable({
@@ -6,39 +8,38 @@ import { Task } from '../interfaces/task';
 })
 export class TaskService {
 
-  private listOfTasks: Task[] = [];
+  listOfTasks$ = new BehaviorSubject<Task[]>([]);
 
   constructor() {}
 
-  setListOfTasks(list: Task[]): void {
-    this.listOfTasks = list;
+  setListOfTasks(listOfTasks: Task[]): void {
+    this.listOfTasks$.next(listOfTasks);
   }
 
-  getListOfTasks(): Task[] {
-    return this.listOfTasks;
+  add(task: Task, listOfTasks: Task[]): void {
+    listOfTasks.push(task);
+    this.listOfTasks$.next(listOfTasks);
   }
 
-  add(task: Task): void {
-    this.listOfTasks.push(task);
-  }
-
-  delete(id: number): Task | null {
+  delete(id: number, listOfTasks: Task[]): Task | null {
     let oldTask = null;
-    for(let i = 0; i < this.listOfTasks.length; i++) {
-      if(this.listOfTasks[i].id === id) {
-        oldTask = this.listOfTasks[i];
-        this.listOfTasks.splice(i, 1);
+    for(let i = 0; i < listOfTasks.length; i++) {
+      if(listOfTasks[i].id === id) {
+        oldTask = listOfTasks[i];
+        listOfTasks.splice(i, 1);
+        this.listOfTasks$.next(listOfTasks);
       }
     }
     return oldTask;
   }
 
-  changeTask(task: Task): Task | null {
+  changeTask(task: Task, listOfTasks: Task[]): Task | null {
     let oldTask = null;
-    for(let i = 0; i < this.listOfTasks.length; i++) {
-      if(this.listOfTasks[i].id === task.id) {
-        oldTask = this.listOfTasks[i];
-        this.listOfTasks[i] = task;
+    for(let i = 0; i < listOfTasks.length; i++) {
+      if(listOfTasks[i].id === task.id) {
+        oldTask = listOfTasks[i];
+        listOfTasks[i] = task;
+        this.listOfTasks$.next(listOfTasks);
       }
     }
     return oldTask;

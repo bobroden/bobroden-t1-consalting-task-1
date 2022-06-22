@@ -7,6 +7,8 @@ import { LocalStorageService } from './local-storage.service';
 import { User } from '../interfaces/user';
 import { MainUserInfo } from '../interfaces/main-user-info';
 
+import { Task } from '../interfaces/task';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -92,11 +94,11 @@ export class UserService {
     this.currentUser.password = user.password;
   }
 
-  saveChanges(): void {
+  saveChanges(listOfCategories: string[], listOfTasks: Task[]): void {
     for(let i = 0; i < this.listOfUsers.length; i++) {
       if(this.currentUser.id === this.listOfUsers[i].id) {
-        this.currentUser.listOfCategories = this.categoryService.getListOfCategories();
-        this.currentUser.listOfTasks = this.taskService.getListOfTasks();
+        this.currentUser.listOfCategories = listOfCategories;
+        this.currentUser.listOfTasks = listOfTasks;
         this.listOfUsers.splice(i, 1, this.currentUser);
         this.localStorageService.set('users', this.listOfUsers);
       }
