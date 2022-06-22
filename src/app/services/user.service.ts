@@ -54,7 +54,7 @@ export class UserService {
   }
 
   addUser(user: MainUserInfo): boolean {
-    let newUser: User = {
+    const newUser: User = {
       id: this.listOfUsers.length,
       login: user.login,
       password: user.password,

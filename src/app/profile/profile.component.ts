@@ -33,7 +33,7 @@ export class ProfileComponent {
   }
 
   change(): void {
-    let user: MainUserInfo = {
+    const user: MainUserInfo = {
       login: this.profileForm.getRawValue().emailFormControl,
       password: this.profileForm.getRawValue().passwordFormControl
     }

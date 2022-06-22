@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, ViewChild, OnDestroy, OnInit } from '@angular/core';
+import { Component, ViewChild, OnDestroy, OnInit } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 
 import { MatSort } from '@angular/material/sort';
@@ -19,7 +19,7 @@ import { Task } from '../interfaces/task';
   templateUrl: './list-of-tasks.component.html',
   styleUrls: ['./list-of-tasks.component.scss']
 })
-export class ListOfTasksComponent implements AfterViewInit, OnDestroy, OnInit {
+export class ListOfTasksComponent implements OnDestroy, OnInit {
 
   displayedColums: string[] = ['id', 'name', 'startDate', 'endDate', 'priority', 'category', 'actions']
   dataSource: MatTableDataSource<Task>;
@@ -39,10 +39,6 @@ export class ListOfTasksComponent implements AfterViewInit, OnDestroy, OnInit {
       this.dataSource = new MatTableDataSource(this.listOfTasks);
       this.dataSource.sort = this.sort;
     });
-  }
-
-  ngAfterViewInit(): void {
-    //this.dataSource.sort = this.sort;
   }
 
   ngOnDestroy(): void {
@@ -69,7 +65,7 @@ export class ListOfTasksComponent implements AfterViewInit, OnDestroy, OnInit {
 
     dialogRef.afterClosed().pipe(takeUntil(this.destroy$)).subscribe(result => {
       try {
-        let newTask: Task = {
+        const newTask: Task = {
           id: +result.id,
           name: result.name,
           category: []
@@ -106,7 +102,7 @@ export class ListOfTasksComponent implements AfterViewInit, OnDestroy, OnInit {
 
     dialogRef.afterClosed().pipe(takeUntil(this.destroy$)).subscribe(result => {
       try {
-        let changingTask: Task = {
+        const changingTask: Task = {
           id: +result.id,
           name: result.name,
           category: result.category
@@ -139,7 +135,7 @@ export class ListOfTasksComponent implements AfterViewInit, OnDestroy, OnInit {
 
     dialogRef.afterClosed().pipe(takeUntil(this.destroy$)).subscribe(result => {
       try {
-        let deletingId = +result.id;
+        const deletingId = +result.id;
         this.taskService.delete(deletingId, this.listOfTasks);
       }
       catch {}

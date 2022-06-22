@@ -18,7 +18,7 @@ export class LocalStorageService {
   }
 
   removeCurrentUser(): User {
-    let currnetUser = JSON.parse(localStorage.getItem('currentUser') || '');
+    const currnetUser = JSON.parse(localStorage.getItem('currentUser') || '');
     localStorage.removeItem('currentUser');
     return currnetUser;
   }

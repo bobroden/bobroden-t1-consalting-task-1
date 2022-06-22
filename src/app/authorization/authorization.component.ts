@@ -36,7 +36,7 @@ export class AuthorizationComponent {
   }
 
   signIn(): void {
-    let user: MainUserInfo = {
+    const user: MainUserInfo = {
       login: this.authorizationForm.getRawValue().emailFormControl,
       password: this.authorizationForm.getRawValue().passwordFormControl
     }
@@ -52,7 +52,7 @@ export class AuthorizationComponent {
   }
 
   signUp(): void {
-    let user: MainUserInfo = {
+    const user: MainUserInfo = {
       login: this.authorizationForm.getRawValue().emailFormControl,
       password: this.authorizationForm.getRawValue().passwordFormControl
     }

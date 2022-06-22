@@ -61,8 +61,8 @@ export class CreatingTaskComponent {
 
   datesValidator(startDate: string, endDate: string): object {
     return (group: FormGroup) => {
-      let start = group.controls[startDate];
-      let end = group.controls[endDate];
+      const start = group.controls[startDate];
+      const end = group.controls[endDate];
       if(new Date(start.value) > new Date(end.value) && start.value !== null && end.value !== null) {
         return {
           error: true
