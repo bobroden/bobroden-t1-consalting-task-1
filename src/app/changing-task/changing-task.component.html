@@ -37,7 +37,7 @@
                 <mat-select formControlName="categoryFormControl" multiple>
                     <mat-select-trigger>
                       <mat-chip-list>
-                        <mat-chip *ngFor="let category of data.category"
+                        <mat-chip *ngFor="let category of changingTaskForm.controls['categoryFormControl'].value"
                           color="accent" selected>
                           {{ category }}
                         </mat-chip>
