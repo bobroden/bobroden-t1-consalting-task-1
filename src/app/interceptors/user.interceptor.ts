@@ -70,8 +70,6 @@ export class UserInterceptor implements HttpInterceptor {
           this.localStorageService.setCurrentUser(body);
         }
       }
-      /*if(body)
-        this.localStorageService.setCurrentUser(body);*/
       return of(new HttpResponse<User>({status: 200, body}));
     }
 
