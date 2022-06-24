@@ -1,5 +1,6 @@
 import { Component, ViewChild, OnDestroy, OnInit } from '@angular/core';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, take, takeUntil } from 'rxjs';
+import { HttpClient, HttpEvent } from '@angular/common/http';
 
 import { MatSort } from '@angular/material/sort';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
@@ -31,7 +32,7 @@ export class ListOfTasksComponent implements OnDestroy, OnInit {
 
   listOfTasks: Task[] = [];
   
-  constructor(public taskService: TaskService, public dialog: MatDialog) {}
+  constructor(public taskService: TaskService, public dialog: MatDialog, private http: HttpClient) {}
 
   ngOnInit(): void {
     this.taskService.listOfTasks$.pipe(takeUntil(this.destroy$)).subscribe(list => {
@@ -39,6 +40,7 @@ export class ListOfTasksComponent implements OnDestroy, OnInit {
       this.dataSource = new MatTableDataSource(this.listOfTasks);
       this.dataSource.sort = this.sort;
     });
+    //this.http.get('/tasks').pipe(take(1)).subscribe((list as Object) => this.taskService.setListOfTasks(list));
   }
 
   ngOnDestroy(): void {
