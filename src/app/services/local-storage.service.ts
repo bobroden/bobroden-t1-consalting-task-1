@@ -27,8 +27,11 @@ export class LocalStorageService {
     localStorage.setItem('currentUser', JSON.stringify(currentUser));
   }
 
-  getCurrentUser(): User {
-    return JSON.parse(localStorage.getItem('currentUser') || '');
+  getCurrentUser(): User | null {
+    const currentUser = localStorage.getItem('currentUser');
+    if(currentUser)
+      return JSON.parse(currentUser);
+    return null;
   }
   
 }

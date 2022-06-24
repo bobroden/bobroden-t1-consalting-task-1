@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, takeUntil, take } from 'rxjs';
 
 import { UserService } from '../services/user.service';
 import { LocalStorageService } from '../services/local-storage.service';
@@ -44,7 +44,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   saveChanges(): void {
-    this.userService.saveChanges(this.listOfCategories, this.listOfTasks);
+    this.userService.saveChanges(this.listOfCategories, this.listOfTasks).pipe(take(1)).subscribe();
   }
 
   signOut(): void {

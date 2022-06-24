@@ -1,7 +1,7 @@
 import { Task } from "./task";
 
 export interface User {
-    id: number;
+    id?: number;
     login: string;
     password: string;
     listOfTasks: Task[];

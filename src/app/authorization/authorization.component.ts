@@ -11,6 +11,7 @@ import { CategoryService } from '../services/category.service';
 import { ErrorComponent } from '../error/error.component';
 
 import { MainUserInfo } from '../interfaces/main-user-info';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-authorization',
@@ -40,15 +41,13 @@ export class AuthorizationComponent {
       login: this.authorizationForm.getRawValue().emailFormControl,
       password: this.authorizationForm.getRawValue().passwordFormControl
     }
-    if(this.userService.isUser(user)) {
+    this.userService.getServerUser(user).pipe(take(1)).subscribe((user) => {
+      this.userService.setCurrentUser(user);
       this.userService.setIsSigned(true);
       this.taskService.setListOfTasks(this.userService.getCurrentUser().listOfTasks);
       this.categoryService.setListOfCategories(this.userService.getCurrentUser().listOfCategories);
       this.router.navigateByUrl('/tasks');
-    }
-    else {
-      this.openDialog('Incorrect login or password! :(');
-    }
+    })
   }
 
   signUp(): void {
@@ -56,15 +55,13 @@ export class AuthorizationComponent {
       login: this.authorizationForm.getRawValue().emailFormControl,
       password: this.authorizationForm.getRawValue().passwordFormControl
     }
-    if(!this.userService.checkSameLogin(user)) {
-      this.userService.addUser(user);
+    this.userService.addUser(user).pipe(take(1)).subscribe((user) => {
+      this.userService.setCurrentUser(user);
+      this.userService.setIsSigned(true);
       this.categoryService.setListOfCategories([]);
       this.taskService.setListOfTasks([]);
       this.router.navigateByUrl('/tasks');
-    }
-    else {
-      this.openDialog('Sorry, but we already have such a user :(');
-    }
+    })
   }
 
   changePasswordMode(): void {
