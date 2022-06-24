@@ -56,7 +56,7 @@ export class ListOfTasksComponent implements OnDestroy, OnInit {
   openCreatingDialog(): void {
     const dialogRef = this.dialog.open(CreatingTaskComponent, {
       data: {
-        id: this.listOfTasks.length,
+        id: this.listOfTasks.reduce((acc, curr) => acc.id > curr.id ? acc : curr).id + 1,
         name: '',
         startDate: null,
         endDate: null,
