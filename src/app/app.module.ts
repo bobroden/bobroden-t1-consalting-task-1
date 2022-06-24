@@ -4,7 +4,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { Routes, RouterModule } from '@angular/router';
 
@@ -23,7 +22,7 @@ import { ProfileComponent } from './profile/profile.component';
 
 import { IsAuthGuard } from './is-auth.guard';
 
-import { TaskInterceptor } from './interceptors/task.interceptor';
+import { backendProvider } from './interceptors/user.interceptor';
 
 const appRoutes: Routes = [
   { path: 'auth', component: AuthorizationComponent },
@@ -53,11 +52,7 @@ const appRoutes: Routes = [
     CategoryModule
   ],
   providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      multi: true,
-      useClass: TaskInterceptor
-    }
+    backendProvider
   ],
   bootstrap: [AppComponent]
 })
