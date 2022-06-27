@@ -7,22 +7,22 @@ import { MatIconModule } from '@angular/material/icon';
 import { Routes, RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 
-import { AuthorizationModule } from './modules/authorization.module';
-import { TasksModule } from './modules/tasks.module';
-import { CategoryModule } from './modules/category.module';
+import { AuthorizationModule } from './authorization.module';
+import { TasksModule } from './tasks.module';
+import { CategoryModule } from './category.module';
 
-import { AppComponent } from './app.component';
-import { HeaderComponent } from './components/header/header.component';
-import { ErrorComponent } from './components/error/error.component';
-import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
-import { ListOfTasksComponent } from './components/list-of-tasks/list-of-tasks.component';
-import { AuthorizationComponent } from './components/authorization/authorization.component';
-import { CategoryComponent } from './components/category/category.component';
-import { ProfileComponent } from './components/profile/profile.component';
+import { AppComponent } from '../components/app/app.component';
+import { HeaderComponent } from '../components/header/header.component';
+import { ErrorComponent } from '../components/error/error.component';
+import { PageNotFoundComponent } from '../components/page-not-found/page-not-found.component';
+import { ListOfTasksComponent } from '../components/list-of-tasks/list-of-tasks.component';
+import { AuthorizationComponent } from '../components/authorization/authorization.component';
+import { CategoryComponent } from '../components/category/category.component';
+import { ProfileComponent } from '../components/profile/profile.component';
 
-import { IsAuthGuard } from './is-auth.guard';
+import { IsAuthGuard } from '../guards/is-auth.guard';
 
-import { backendProvider } from './interceptors/user.interceptor';
+import { backendProvider } from '../interceptors/user.interceptor';
 
 const appRoutes: Routes = [
   { path: 'auth', component: AuthorizationComponent },

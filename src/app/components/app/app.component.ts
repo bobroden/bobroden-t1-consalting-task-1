@@ -2,11 +2,11 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 
-import { UserService } from './services/user.service';
-import { CategoryService } from './services/category.service';
-import { TaskService } from './services/task.service';
+import { UserService } from '../../services/user.service';
+import { CategoryService } from '../../services/category.service';
+import { TaskService } from '../../services/task.service';
 
-import { User } from './interfaces/user';
+import { User } from '../../interfaces/user';
 
 @Component({
   selector: 'app-root',
