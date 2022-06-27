@@ -1,4 +1,4 @@
-import { Component, ViewChild, OnDestroy, OnInit } from '@angular/core';
+import { Component, ViewChild, OnDestroy, OnInit, AfterViewInit } from '@angular/core';
 import { Subject, take, takeUntil } from 'rxjs';
 import { HttpClient, HttpEvent } from '@angular/common/http';
 
@@ -20,7 +20,7 @@ import { Task } from '../../interfaces/task';
   templateUrl: './list-of-tasks.component.html',
   styleUrls: ['./list-of-tasks.component.scss']
 })
-export class ListOfTasksComponent implements OnDestroy, OnInit {
+export class ListOfTasksComponent implements OnDestroy, OnInit, AfterViewInit {
 
   displayedColums: string[] = ['id', 'name', 'startDate', 'endDate', 'priority', 'category', 'actions']
   dataSource: MatTableDataSource<Task>;
@@ -40,7 +40,11 @@ export class ListOfTasksComponent implements OnDestroy, OnInit {
       this.dataSource = new MatTableDataSource(this.listOfTasks);
       this.dataSource.sort = this.sort;
     });
-    //this.http.get('/tasks').pipe(take(1)).subscribe((list as Object) => this.taskService.setListOfTasks(list));
+  }
+
+  ngAfterViewInit(): void {
+    this.dataSource = new MatTableDataSource(this.listOfTasks);
+    this.dataSource.sort = this.sort;
   }
 
   ngOnDestroy(): void {
