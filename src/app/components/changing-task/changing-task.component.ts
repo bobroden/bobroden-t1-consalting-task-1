@@ -4,10 +4,10 @@ import { Subject, takeUntil } from 'rxjs';
 
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
-import { TaskService } from '../services/task.service';
-import { CategoryService } from '../services/category.service';
+import { TaskService } from '../../services/task.service';
+import { CategoryService } from '../../services/category.service';
 
-import { Task } from '../interfaces/task';
+import { Task } from '../../interfaces/task';
 
 @Component({
   selector: 'app-changing-task',

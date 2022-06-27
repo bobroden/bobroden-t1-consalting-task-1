@@ -4,10 +4,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MaterialModule } from './material.module';
 
-import { ListOfTasksComponent } from '../list-of-tasks/list-of-tasks.component';
-import { CreatingTaskComponent } from '../creating-task/creating-task.component';
-import { ChangingTaskComponent } from '../changing-task/changing-task.component';
-import { DeletingTaskComponent } from '../deleting-task/deleting-task.component';
+import { ListOfTasksComponent } from '../components/list-of-tasks/list-of-tasks.component';
+import { CreatingTaskComponent } from '../components/creating-task/creating-task.component';
+import { ChangingTaskComponent } from '../components/changing-task/changing-task.component';
+import { DeletingTaskComponent } from '../components/deleting-task/deleting-task.component';
 
 @NgModule({
   imports: [

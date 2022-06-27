@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MaterialModule } from './material.module';
 
-import { CategoryComponent } from '../category/category.component';
+import { CategoryComponent } from '../components/category/category.component';
 
 @NgModule({
   imports: [

@@ -5,10 +5,10 @@ import { Subject, takeUntil } from 'rxjs';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 
-import { CategoryService } from '../services/category.service';
-import { TaskService } from '../services/task.service';
+import { CategoryService } from '../../services/category.service';
+import { TaskService } from '../../services/task.service';
 
-import { Task } from '../interfaces/task';
+import { Task } from '../../interfaces/task';
 
 import { ErrorComponent } from '../error/error.component';
 

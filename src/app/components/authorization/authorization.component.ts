@@ -4,13 +4,13 @@ import { Router } from '@angular/router';
 
 import { MatDialog } from '@angular/material/dialog';
 
-import { UserService } from '../services/user.service';
-import { TaskService } from '../services/task.service';
-import { CategoryService } from '../services/category.service';
+import { UserService } from '../../services/user.service';
+import { TaskService } from '../../services/task.service';
+import { CategoryService } from '../../services/category.service';
 
 import { ErrorComponent } from '../error/error.component';
 
-import { MainUserInfo } from '../interfaces/main-user-info';
+import { MainUserInfo } from '../../interfaces/main-user-info';
 import { take } from 'rxjs';
 
 @Component({

@@ -10,7 +10,7 @@ import {
 import { catchError, Observable, of, throwError } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 
-import { ErrorComponent } from '../error/error.component';
+import { ErrorComponent } from '../components/error/error.component';
 
 import { User } from '../interfaces/user';
 import { MainUserInfo } from '../interfaces/main-user-info';

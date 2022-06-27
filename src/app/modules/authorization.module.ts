@@ -4,8 +4,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MaterialModule } from './material.module';
 
-import { AuthorizationComponent } from '../authorization/authorization.component';
-import { ProfileComponent } from '../profile/profile.component';
+import { AuthorizationComponent } from '../components/authorization/authorization.component';
+import { ProfileComponent } from '../components/profile/profile.component';
 
 @NgModule({
   imports: [

@@ -12,13 +12,13 @@ import { TasksModule } from './modules/tasks.module';
 import { CategoryModule } from './modules/category.module';
 
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './header/header.component';
-import { ErrorComponent } from './error/error.component';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { ListOfTasksComponent } from './list-of-tasks/list-of-tasks.component';
-import { AuthorizationComponent } from './authorization/authorization.component';
-import { CategoryComponent } from './category/category.component';
-import { ProfileComponent } from './profile/profile.component';
+import { HeaderComponent } from './components/header/header.component';
+import { ErrorComponent } from './components/error/error.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { ListOfTasksComponent } from './components/list-of-tasks/list-of-tasks.component';
+import { AuthorizationComponent } from './components/authorization/authorization.component';
+import { CategoryComponent } from './components/category/category.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 import { IsAuthGuard } from './is-auth.guard';
 

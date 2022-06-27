@@ -2,12 +2,12 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject, takeUntil, take } from 'rxjs';
 
-import { UserService } from '../services/user.service';
-import { LocalStorageService } from '../services/local-storage.service';
-import { CategoryService } from '../services/category.service';
-import { TaskService } from '../services/task.service';
+import { UserService } from '../../services/user.service';
+import { LocalStorageService } from '../../services/local-storage.service';
+import { CategoryService } from '../../services/category.service';
+import { TaskService } from '../../services/task.service';
 
-import { Task } from '../interfaces/task';
+import { Task } from '../../interfaces/task';
 
 @Component({
   selector: 'app-header',

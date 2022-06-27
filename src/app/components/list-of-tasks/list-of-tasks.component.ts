@@ -10,9 +10,9 @@ import { CreatingTaskComponent } from '../creating-task/creating-task.component'
 import { ChangingTaskComponent } from '../changing-task/changing-task.component';
 import { DeletingTaskComponent } from '../deleting-task/deleting-task.component';
 
-import { TaskService } from '../services/task.service';
+import { TaskService } from '../../services/task.service';
 
-import { Task } from '../interfaces/task';
+import { Task } from '../../interfaces/task';
 
 
 @Component({

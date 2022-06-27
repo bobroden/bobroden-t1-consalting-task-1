@@ -4,11 +4,11 @@ import { Router } from '@angular/router';
 
 import { MatDialog } from '@angular/material/dialog';
 
-import { UserService } from '../services/user.service';
+import { UserService } from '../../services/user.service';
 
 import { ErrorComponent } from '../error/error.component';
 
-import { MainUserInfo } from '../interfaces/main-user-info';
+import { MainUserInfo } from '../../interfaces/main-user-info';
 
 @Component({
   selector: 'app-profile',
