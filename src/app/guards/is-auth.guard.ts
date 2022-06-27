@@ -14,10 +14,12 @@ export class IsAuthGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    if(this.userService.isSigned) {
-      return true;
-    }
-    return false;
+    let isTrue = false
+      this.userService.isSigned$.subscribe((value) => {
+      if(value)
+        isTrue = true
+    })
+    return isTrue;
   }
   
 }

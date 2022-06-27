@@ -1,6 +1,6 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, take, takeUntil } from 'rxjs';
 
 import { UserService } from '../../services/user.service';
 import { CategoryService } from '../../services/category.service';
@@ -11,7 +11,8 @@ import { User } from '../../interfaces/user';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent implements OnInit, OnDestroy {
 
@@ -29,9 +30,11 @@ export class AppComponent implements OnInit, OnDestroy {
       }
     });
 
-    if(!this.userService.isSigned) {
-      this.router.navigateByUrl('/auth');
-    }
+    this.userService.isSigned$.pipe(take(1)).subscribe((value) => {
+      if(!value) {
+        this.router.navigateByUrl('/auth');
+      }
+    })
   }
 
   ngOnDestroy(): void {

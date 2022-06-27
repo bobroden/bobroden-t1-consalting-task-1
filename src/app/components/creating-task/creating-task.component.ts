@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 
@@ -12,7 +12,8 @@ import { Task } from '../../interfaces/task';
 @Component({
   selector: 'app-creating-task',
   templateUrl: './creating-task.component.html',
-  styleUrls: ['./creating-task.component.scss']
+  styleUrls: ['./creating-task.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CreatingTaskComponent {
 

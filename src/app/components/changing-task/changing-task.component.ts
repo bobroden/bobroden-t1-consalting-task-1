@@ -1,4 +1,4 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 
@@ -12,7 +12,8 @@ import { Task } from '../../interfaces/task';
 @Component({
   selector: 'app-changing-task',
   templateUrl: './changing-task.component.html',
-  styleUrls: ['./changing-task.component.scss']
+  styleUrls: ['./changing-task.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ChangingTaskComponent implements OnInit, OnDestroy {
 

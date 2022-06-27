@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { User } from '../interfaces/user';
 import { MainUserInfo } from '../interfaces/main-user-info';
 import { Task } from '../interfaces/task';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -12,17 +12,18 @@ import { Observable } from 'rxjs';
 export class UserService {
   private currentUser: User;
 
-  isSigned: boolean = false;
+  //isSigned: boolean = false;
+  isSigned$ = new BehaviorSubject<boolean>(false);
 
   constructor(private http: HttpClient) {}
 
   setIsSigned(value: boolean): void {
-    this.isSigned = value;
+    this.isSigned$.next(value);
   }
 
-  getIsSigned(): boolean {
+  /*getIsSigned(): boolean {
     return this.isSigned;
-  }
+  }*/
 
   setCurrentUser(user: User): void {
     this.currentUser = user;

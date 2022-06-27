@@ -1,6 +1,5 @@
-import { Component, ViewChild, OnDestroy, OnInit, AfterViewInit } from '@angular/core';
-import { Subject, take, takeUntil } from 'rxjs';
-import { HttpClient, HttpEvent } from '@angular/common/http';
+import { Component, ViewChild, OnDestroy, OnInit, ChangeDetectionStrategy, AfterViewInit } from '@angular/core';
+import { map, Observable, Subject, takeUntil, take } from 'rxjs';
 
 import { MatSort } from '@angular/material/sort';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
@@ -13,14 +12,16 @@ import { DeletingTaskComponent } from '../deleting-task/deleting-task.component'
 import { TaskService } from '../../services/task.service';
 
 import { Task } from '../../interfaces/task';
+import { CdkTableDataSourceInput } from '@angular/cdk/table';
 
 
 @Component({
   selector: 'app-list-of-tasks',
   templateUrl: './list-of-tasks.component.html',
-  styleUrls: ['./list-of-tasks.component.scss']
+  styleUrls: ['./list-of-tasks.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ListOfTasksComponent implements OnDestroy, OnInit, AfterViewInit {
+export class ListOfTasksComponent implements AfterViewInit, OnDestroy, OnInit {
 
   displayedColums: string[] = ['id', 'name', 'startDate', 'endDate', 'priority', 'category', 'actions']
   dataSource: MatTableDataSource<Task>;
@@ -31,19 +32,28 @@ export class ListOfTasksComponent implements OnDestroy, OnInit, AfterViewInit {
   destroy$: Subject<boolean> = new Subject<boolean>();
 
   listOfTasks: Task[] = [];
+
+  tableObs$: Observable<CdkTableDataSourceInput<Task>>;
   
-  constructor(public taskService: TaskService, public dialog: MatDialog, private http: HttpClient) {}
+  constructor(public taskService: TaskService, public dialog: MatDialog) {}
 
   ngOnInit(): void {
-    this.taskService.listOfTasks$.pipe(takeUntil(this.destroy$)).subscribe(list => {
-      this.listOfTasks = list;
-      this.dataSource = new MatTableDataSource(this.listOfTasks);
-      this.dataSource.sort = this.sort;
-    });
+    this.tableObs$ = this.taskService.listOfTasks$.pipe(
+      takeUntil(this.destroy$),
+      map(tasks => {
+        this.listOfTasks = tasks;
+        this.dataSource = new MatTableDataSource<Task>(tasks);
+        this.dataSource.sort = this.sort;
+        return this.dataSource;
+      })
+    );
+
+    this.taskService.listOfTasks$.pipe(take(1)).subscribe(list => {
+      this.dataSource = new MatTableDataSource<Task>(list);
+    })
   }
 
   ngAfterViewInit(): void {
-    this.dataSource = new MatTableDataSource(this.listOfTasks);
     this.dataSource.sort = this.sort;
   }
 
