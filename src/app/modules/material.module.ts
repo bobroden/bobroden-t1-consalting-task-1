@@ -13,7 +13,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
-const MaterialComponents = [
+export const MaterialComponents = [
   MatCardModule,
   MatProgressBarModule,
   MatInputModule,

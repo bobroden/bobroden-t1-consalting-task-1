@@ -1,14 +1,25 @@
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { CategoryService } from 'src/app/services/category.service';
+import { TaskService } from 'src/app/services/task.service';
 
 import { DeletingTaskComponent } from './deleting-task.component';
 
-describe('RunComponent', () => {
+describe('DeletingTaskComponent', () => {
   let component: DeletingTaskComponent;
   let fixture: ComponentFixture<DeletingTaskComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DeletingTaskComponent ]
+      declarations: [ DeletingTaskComponent ],
+      imports: [MatDialogModule],
+      providers: [
+        TaskService,
+        { provide: MatDialogRef, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: {} }
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
     .compileComponents();
 

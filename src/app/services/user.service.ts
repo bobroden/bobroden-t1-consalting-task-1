@@ -11,8 +11,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 })
 export class UserService {
   private currentUser: User;
-
-  //isSigned: boolean = false;
+  
   isSigned$ = new BehaviorSubject<boolean>(false);
 
   constructor(private http: HttpClient) {}
@@ -20,10 +19,6 @@ export class UserService {
   setIsSigned(value: boolean): void {
     this.isSigned$.next(value);
   }
-
-  /*getIsSigned(): boolean {
-    return this.isSigned;
-  }*/
 
   setCurrentUser(user: User): void {
     this.currentUser = user;
