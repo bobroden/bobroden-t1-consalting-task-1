@@ -36,4 +36,38 @@ describe('ChangingTaskComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should be nameFormControl invalid', () => {
+    const ctrl = component.changingTaskForm.get('nameFormControl');
+
+    ctrl?.setValue(null);
+    fixture.detectChanges();
+    expect(ctrl?.invalid).toBeTruthy();
+
+    ctrl?.setValue('');
+    fixture.detectChanges();
+    expect(ctrl?.invalid).toBeTruthy();
+
+    ctrl?.setValue('b');
+    fixture.detectChanges();
+    expect(ctrl?.invalid).toBeTruthy();
+
+    ctrl?.setValue('22');
+    fixture.detectChanges();
+    expect(ctrl?.invalid).toBeTruthy();
+
+  });
+
+  it('should be nameFormControl valid', () => {
+    const ctrl = component.changingTaskForm.get('nameFormControl');
+
+    ctrl?.setValue('create');
+    fixture.detectChanges();
+    expect(ctrl?.valid).toBeTruthy();
+
+    ctrl?.setValue('run');
+    fixture.detectChanges();
+    expect(ctrl?.valid).toBeTruthy();
+
+  });
 });

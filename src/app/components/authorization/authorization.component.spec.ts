@@ -49,4 +49,60 @@ describe('AuthorizationComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should be emailFormControl invalid', () => {
+    const ctrl = component.authorizationForm.get('emailFormControl');
+
+    ctrl?.setValue(null);
+    fixture.detectChanges();
+    expect(ctrl?.invalid).toBeTruthy();
+
+    ctrl?.setValue('bbbdd');
+    fixture.detectChanges();
+    expect(ctrl?.invalid).toBeTruthy();
+
+    ctrl?.setValue('bb');
+    fixture.detectChanges();
+    expect(ctrl?.invalid).toBeTruthy();
+  });
+
+  it('should be passwordFormControl invalid', () => {
+    const ctrl = component.authorizationForm.get('passwordFormControl');
+
+    ctrl?.setValue(null);
+    fixture.detectChanges();
+    expect(ctrl?.invalid).toBeTruthy();
+
+    ctrl?.setValue('bbbdd');
+    fixture.detectChanges();
+    expect(ctrl?.invalid).toBeTruthy();
+
+    ctrl?.setValue('bB23');
+    fixture.detectChanges();
+    expect(ctrl?.invalid).toBeTruthy();
+  });
+
+  it('should be emailFormControl valid', () => {
+    const ctrl = component.authorizationForm.get('emailFormControl');
+
+    ctrl?.setValue('bb@dd');
+    fixture.detectChanges();
+    expect(ctrl?.valid).toBeTruthy();
+
+    ctrl?.setValue('bobrov@denis');
+    fixture.detectChanges();
+    expect(ctrl?.valid).toBeTruthy();
+  })
+
+  it('should be passwordFormControl valid', () => {
+    const ctrl = component.authorizationForm.get('passwordFormControl');
+
+    ctrl?.setValue('12zS.');
+    fixture.detectChanges();
+    expect(ctrl?.valid).toBeTruthy();
+
+    ctrl?.setValue('as2A!');
+    fixture.detectChanges();
+    expect(ctrl?.valid).toBeTruthy();
+  })
 });

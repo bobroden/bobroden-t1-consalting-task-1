@@ -37,4 +37,41 @@ describe('CategoryComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should be addFormControl invalid', () => {
+    const ctrl = component.categoryForm.get('addFormControl');
+
+    ctrl?.setValue(null);
+    fixture.detectChanges();
+    expect(ctrl?.invalid).toBeTruthy();
+
+    ctrl?.setValue('1');
+    fixture.detectChanges();
+    expect(ctrl?.invalid).toBeTruthy();
+
+    ctrl?.setValue('bb');
+    fixture.detectChanges();
+    expect(ctrl?.invalid).toBeTruthy();
+  });
+
+  it('should be changeFormControl disabled', () => {
+    const ctrl = component.categoryForm.get('changeFormControl');
+
+    component.isChange = false;
+    fixture.detectChanges();
+    expect(ctrl?.disabled).toBeTruthy();
+
+  });
+
+  it('should be addFormControl valid', () => {
+    const ctrl = component.categoryForm.get('addFormControl');
+
+    ctrl?.setValue('add');
+    fixture.detectChanges();
+    expect(ctrl?.valid).toBeTruthy();
+
+    ctrl?.setValue('bob');
+    fixture.detectChanges();
+    expect(ctrl?.valid).toBeTruthy();
+  })
 });
