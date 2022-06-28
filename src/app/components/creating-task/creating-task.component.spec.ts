@@ -2,12 +2,9 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MaterialComponents } from 'src/app/modules/material.module';
 import { CategoryService } from 'src/app/services/category.service';
 import { TaskService } from 'src/app/services/task.service';
 
@@ -20,7 +17,13 @@ describe('CreatingTaskComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ CreatingTaskComponent ],
-      imports: [ReactiveFormsModule, MatSelectModule, MatInputModule, BrowserAnimationsModule, MatDialogModule],
+      imports: [
+        ReactiveFormsModule,
+        MatSelectModule,
+        MatInputModule,
+        BrowserAnimationsModule,
+        MatDialogModule
+      ],
       providers: [
         TaskService,
         CategoryService,
@@ -44,19 +47,15 @@ describe('CreatingTaskComponent', () => {
     const ctrl = component.newTaskForm.get('nameFormControl');
 
     ctrl?.setValue(null);
-    fixture.detectChanges();
     expect(ctrl?.invalid).toBeTruthy();
 
     ctrl?.setValue('');
-    fixture.detectChanges();
     expect(ctrl?.invalid).toBeTruthy();
 
     ctrl?.setValue('b');
-    fixture.detectChanges();
     expect(ctrl?.invalid).toBeTruthy();
 
     ctrl?.setValue('22');
-    fixture.detectChanges();
     expect(ctrl?.invalid).toBeTruthy();
 
   });
@@ -65,12 +64,25 @@ describe('CreatingTaskComponent', () => {
     const ctrl = component.newTaskForm.get('nameFormControl');
 
     ctrl?.setValue('create');
-    fixture.detectChanges();
     expect(ctrl?.valid).toBeTruthy();
 
     ctrl?.setValue('run');
-    fixture.detectChanges();
     expect(ctrl?.valid).toBeTruthy();
 
   });
+  
+  it('should be form right', () => {
+    const ctrl = component.newTaskForm.get('nameFormControl');
+    const startDate = component.newTaskForm.get('startDateFormControl');
+    const endDate = component.newTaskForm.get('endDateFormControl');
+
+    ctrl?.setValue('create');
+    startDate?.setValue('2022-06-23');
+    endDate?.setValue('2022-05-31');
+    expect(component.newTaskForm.invalid).toBeTruthy();
+
+    endDate?.setValue('');
+    expect(component.newTaskForm.valid).toBeTruthy();
+  });
+
 });

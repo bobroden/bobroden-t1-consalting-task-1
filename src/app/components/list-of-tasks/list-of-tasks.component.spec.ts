@@ -13,8 +13,13 @@ describe('ListOfTasksComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ ListOfTasksComponent ],
-      imports:  [ MatDialogModule, MatTableModule],
-      providers: [ TaskService ],
+      imports:  [
+        MatDialogModule,
+        MatTableModule
+      ],
+      providers: [
+        TaskService
+      ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
     .compileComponents();

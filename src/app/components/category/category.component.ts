@@ -100,7 +100,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
           if(item.category.length !== 0) {
             for(let i = 0; i < item.category.length; i++) {
               if(this.oldChangeValue === item.category[i])
-              item.category[i] = this.categoryForm.controls['changeFormControl'].value.trim()
+              item.category[i] = this.categoryForm.controls['changeFormControl'].value.trim();
             }
           }
         })

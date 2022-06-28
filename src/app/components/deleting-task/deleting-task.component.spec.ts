@@ -13,7 +13,9 @@ describe('DeletingTaskComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ DeletingTaskComponent ],
-      imports: [MatDialogModule],
+      imports: [
+        MatDialogModule
+      ],
       providers: [
         TaskService,
         { provide: MatDialogRef, useValue: {} },
@@ -31,4 +33,5 @@ describe('DeletingTaskComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+  
 });

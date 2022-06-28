@@ -2,7 +2,8 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
-import { MatTable, MatTableModule } from '@angular/material/table';
+import { MatTableModule } from '@angular/material/table';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CategoryService } from 'src/app/services/category.service';
 import { TaskService } from 'src/app/services/task.service';
 
@@ -19,7 +20,8 @@ describe('CategoryComponent', () => {
         MatDialogModule,
         FormsModule,
         ReactiveFormsModule,
-        MatTableModule
+        MatTableModule,
+        BrowserAnimationsModule
       ],
       providers: [
         CategoryService,
@@ -42,15 +44,12 @@ describe('CategoryComponent', () => {
     const ctrl = component.categoryForm.get('addFormControl');
 
     ctrl?.setValue(null);
-    fixture.detectChanges();
     expect(ctrl?.invalid).toBeTruthy();
 
     ctrl?.setValue('1');
-    fixture.detectChanges();
     expect(ctrl?.invalid).toBeTruthy();
 
     ctrl?.setValue('bb');
-    fixture.detectChanges();
     expect(ctrl?.invalid).toBeTruthy();
   });
 
@@ -58,7 +57,6 @@ describe('CategoryComponent', () => {
     const ctrl = component.categoryForm.get('changeFormControl');
 
     component.isChange = false;
-    fixture.detectChanges();
     expect(ctrl?.disabled).toBeTruthy();
 
   });
@@ -67,11 +65,39 @@ describe('CategoryComponent', () => {
     const ctrl = component.categoryForm.get('addFormControl');
 
     ctrl?.setValue('add');
-    fixture.detectChanges();
     expect(ctrl?.valid).toBeTruthy();
 
     ctrl?.setValue('bob');
-    fixture.detectChanges();
     expect(ctrl?.valid).toBeTruthy();
   })
+
+  it('should listOfCategories length be more', () => {
+    const ctrl = component.categoryForm.get('addFormControl');
+
+    ctrl?.setValue('add');
+    component.addCategory();
+    expect(component.listOfCategories.length).toBeGreaterThan(0);
+  })
+
+  it('should listOfCategories length be less', () => {
+    component.deleteCategory('add');
+    expect(component.listOfCategories.length).toBe(0);
+  })
+
+  it('should category be changed', () => {
+    const addCtrl = component.categoryForm.get('addFormControl');
+    const changeCtrl = component.categoryForm.get('changeFormControl');
+
+    addCtrl?.setValue('add');
+    component.addCategory();
+    addCtrl?.setValue('create');
+    component.addCategory();
+
+    component.changeMode('add');
+    changeCtrl?.setValue('read');
+    component.changeCategory();
+
+    expect(component.listOfCategories[0]).toBe('read');
+  })
+
 });

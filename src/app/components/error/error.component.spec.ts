@@ -11,7 +11,9 @@ describe('ErrorComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ ErrorComponent ],
-      imports: [MatDialogModule],
+      imports: [
+        MatDialogModule
+      ],
       providers: [
         { provide: MatDialogRef, useValue: {} },
         { provide: MAT_DIALOG_DATA, useValue: {} }

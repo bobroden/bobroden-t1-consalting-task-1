@@ -54,15 +54,12 @@ describe('AuthorizationComponent', () => {
     const ctrl = component.authorizationForm.get('emailFormControl');
 
     ctrl?.setValue(null);
-    fixture.detectChanges();
     expect(ctrl?.invalid).toBeTruthy();
 
     ctrl?.setValue('bbbdd');
-    fixture.detectChanges();
     expect(ctrl?.invalid).toBeTruthy();
 
     ctrl?.setValue('bb');
-    fixture.detectChanges();
     expect(ctrl?.invalid).toBeTruthy();
   });
 
@@ -70,15 +67,12 @@ describe('AuthorizationComponent', () => {
     const ctrl = component.authorizationForm.get('passwordFormControl');
 
     ctrl?.setValue(null);
-    fixture.detectChanges();
     expect(ctrl?.invalid).toBeTruthy();
 
     ctrl?.setValue('bbbdd');
-    fixture.detectChanges();
     expect(ctrl?.invalid).toBeTruthy();
 
     ctrl?.setValue('bB23');
-    fixture.detectChanges();
     expect(ctrl?.invalid).toBeTruthy();
   });
 
@@ -86,11 +80,9 @@ describe('AuthorizationComponent', () => {
     const ctrl = component.authorizationForm.get('emailFormControl');
 
     ctrl?.setValue('bb@dd');
-    fixture.detectChanges();
     expect(ctrl?.valid).toBeTruthy();
 
     ctrl?.setValue('bobrov@denis');
-    fixture.detectChanges();
     expect(ctrl?.valid).toBeTruthy();
   })
 
@@ -98,11 +90,17 @@ describe('AuthorizationComponent', () => {
     const ctrl = component.authorizationForm.get('passwordFormControl');
 
     ctrl?.setValue('12zS.');
-    fixture.detectChanges();
     expect(ctrl?.valid).toBeTruthy();
 
     ctrl?.setValue('as2A!');
-    fixture.detectChanges();
     expect(ctrl?.valid).toBeTruthy();
+  })
+
+  it('should be different values of hide', () => {
+    component.changePasswordMode();
+    expect(component.hide).toBeFalsy();
+    
+    component.changePasswordMode();
+    expect(component.hide).toBeTruthy();
   })
 });

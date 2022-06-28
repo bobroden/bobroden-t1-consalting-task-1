@@ -17,7 +17,13 @@ describe('ChangingTaskComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ ChangingTaskComponent ],
-      imports: [MatDialogModule, ReactiveFormsModule, MatInputModule, MatSelectModule, BrowserAnimationsModule],
+      imports: [
+        MatDialogModule,
+        ReactiveFormsModule,
+        MatInputModule,
+        MatSelectModule,
+        BrowserAnimationsModule
+      ],
       providers: [
         TaskService,
         CategoryService,
@@ -41,19 +47,15 @@ describe('ChangingTaskComponent', () => {
     const ctrl = component.changingTaskForm.get('nameFormControl');
 
     ctrl?.setValue(null);
-    fixture.detectChanges();
     expect(ctrl?.invalid).toBeTruthy();
 
     ctrl?.setValue('');
-    fixture.detectChanges();
     expect(ctrl?.invalid).toBeTruthy();
 
     ctrl?.setValue('b');
-    fixture.detectChanges();
     expect(ctrl?.invalid).toBeTruthy();
 
     ctrl?.setValue('22');
-    fixture.detectChanges();
     expect(ctrl?.invalid).toBeTruthy();
 
   });
@@ -62,12 +64,24 @@ describe('ChangingTaskComponent', () => {
     const ctrl = component.changingTaskForm.get('nameFormControl');
 
     ctrl?.setValue('create');
-    fixture.detectChanges();
     expect(ctrl?.valid).toBeTruthy();
 
     ctrl?.setValue('run');
-    fixture.detectChanges();
     expect(ctrl?.valid).toBeTruthy();
 
+  });
+
+  it('should be form right', () => {
+    const ctrl = component.changingTaskForm.get('nameFormControl');
+    const startDate = component.changingTaskForm.get('startDateFormControl');
+    const endDate = component.changingTaskForm.get('endDateFormControl');
+
+    ctrl?.setValue('create');
+    startDate?.setValue('2022-06-23');
+    endDate?.setValue('2022-05-31');
+    expect(component.changingTaskForm.invalid).toBeTruthy();
+
+    endDate?.setValue('');
+    expect(component.changingTaskForm.valid).toBeTruthy();
   });
 });
